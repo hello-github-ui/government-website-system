@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container py-4">
+    <div th:if="${flashMessage != null}" class="alert alert-success" th:text="${flashMessage}"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-4">
+                <div class="rounded-circle bg-danger text-white d-inline-flex align-items-center justify-content-center"
+                     style="width:72px;height:72px;font-size:32px;margin:0 auto;">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h5 class="mt-3" th:text="${user.username}">用户名</h5>
+                <p class="text-muted small" th:text="${user.realName} ?: ''"></p>
+            </div>
+            <div class="list-group shadow-sm mt-3">
+                <a th:href="@{/consult/my}" class="list-group-item list-group-item-action"><i class="fas fa-comments"></i> 我的咨询</a>
+                <a th:href="@{/user/password}" class="list-group-item list-group-item-action"><i class="fas fa-key"></i> 修改密码</a>
+                <a th:href="@{/logout}" class="list-group-item list-group-item-action text-danger"><i class="fas fa-sign-out-alt"></i> 退出登录</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="mb-3">个人信息</h5>
+                    <table class="table">
+                        <tr><th style="width:120px;">用户名</th><td th:text="${user.username}"></td></tr>
+                        <tr><th>真实姓名</th><td th:text="${user.realName}"></td></tr>
+                        <tr><th>手机号</th><td th:text="${user.phone}"></td></tr>
+                        <tr><th>邮箱</th><td th:text="${user.email}"></td></tr>
+                        <tr><th>注册时间</th><td th:text="${#temporals.format(user.createTime,'yyyy-MM-dd HH:mm')}"></td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

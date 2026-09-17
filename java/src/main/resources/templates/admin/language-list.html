@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='文字配置')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='文字配置')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm"><div class="card-body">
+            <form th:action="@{/admin/language/save}" method="post">
+                <table class="table">
+                    <thead><tr><th>键名</th><th>内容</th></tr></thead>
+                    <tbody>
+                    <tr th:each="c : ${configs}">
+                        <td class="small text-muted" th:text="${c.langKey}"></td>
+                        <td><input class="form-control" th:name="'cfg_' + ${c.langKey}" th:value="${c.langValue}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-danger">保存全部</button>
+            </form>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='文书编辑')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='文书编辑')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm"><div class="card-body">
+            <form th:action="${info != null} ? @{/admin/judicial/edit/{id}(id=${info.id})} : @{/admin/judicial/add}" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">案号 *</label>
+                        <input name="case_no" class="form-control" th:value="${info?.caseNo}" required></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">案件类型</label>
+                        <input name="case_type" class="form-control" th:value="${info?.caseType}"></div>
+                </div>
+                <div class="mb-3"><label class="form-label">案件名称 *</label>
+                    <input name="case_name" class="form-control" th:value="${info?.caseName}" required></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">审理法院 *</label>
+                        <input name="court" class="form-control" th:value="${info?.court}" required></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">裁判日期</label>
+                        <input type="date" name="judge_date" class="form-control"
+                               th:value="${info?.judgeDate != null} ? ${#temporals.format(info.judgeDate,'yyyy-MM-dd')} : ''"></div>
+                </div>
+                <div class="mb-3"><label class="form-label">文书内容</label>
+                    <textarea name="content" rows="8" class="form-control" th:text="${info?.content}"></textarea></div>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label">审核状态</label>
+                        <select name="checkStatus" class="form-select">
+                            <option value="0" th:selected="${info != null && info.checkStatus == 0}">待审核</option>
+                            <option value="1" th:selected="${info == null || info.checkStatus == 1}">已通过</option>
+                            <option value="2" th:selected="${info != null && info.checkStatus == 2}">已驳回</option>
+                        </select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">是否公开</label>
+                        <select name="isPublic" class="form-select">
+                            <option value="1" th:selected="${info == null || info.isPublic == 1}">公开</option>
+                            <option value="0" th:selected="${info != null && info.isPublic == 0}">不公开</option>
+                        </select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label">状态</label>
+                        <select name="status" class="form-select">
+                            <option value="1" th:selected="${info == null || info.status == 1}">启用</option>
+                            <option value="0" th:selected="${info != null && info.status == 0}">停用</option>
+                        </select></div>
+                </div>
+                <button class="btn btn-danger">保存</button>
+                <a th:href="@{/admin/judicial}" class="btn btn-outline-secondary">返回</a>
+            </form>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

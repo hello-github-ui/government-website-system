@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='管理员')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='管理员')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between">
+                <span>管理员列表（共 <b th:text="${total}"></b> 人）</span>
+                <a th:href="@{/admin/admin/add}" class="btn btn-danger btn-sm"><i class="fas fa-plus"></i> 添加管理员</a>
+            </div>
+            <table class="table table-hover mb-0">
+                <thead class="table-light"><tr><th>ID</th><th>用户名</th><th>姓名</th><th>角色</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                <tr th:each="a : ${list}">
+                    <td th:text="${a.id}"></td>
+                    <td th:text="${a.username}"></td>
+                    <td>
+                        <span th:text="${a.name}"></span>
+                        <span th:if="${a.isSuper==1}" class="badge bg-danger ms-1">超管</span>
+                    </td>
+                    <td th:text="${a.roleId}"></td>
+                    <td>
+                        <span th:if="${a.status==1}" class="badge bg-success">启用</span>
+                        <span th:if="${a.status==0}" class="badge bg-danger">禁用</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/admin/edit/{id}(id=${a.id})}" class="btn btn-sm btn-outline-primary">编辑</a>
+                        <form th:action="@{/admin/admin/delete}" method="post" style="display:inline" onsubmit="return confirm('确认删除？')">
+                            <input type="hidden" name="id" th:value="${a.id}">
+                            <button class="btn btn-sm btn-outline-danger">删除</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

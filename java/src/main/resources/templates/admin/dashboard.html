@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='控制台')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='控制台')}"></div>
+    <div class="admin-content">
+        <div class="row g-4 mb-4">
+            <div class="col-md-3" th:each="card : ${
+                { {'公告总数', stats.noticeCount,'fa-bullhorn','text-danger'},
+                  {'政策法规', stats.policyCount,'fa-file-alt','text-primary'},
+                  {'裁判文书', stats.judicialCount,'fa-gavel','text-success'},
+                  {'前台用户', stats.userCount,'fa-users','text-warning'} }
+            }">
+                <div class="card shadow-sm"><div class="card-body">
+                    <i th:class="${card[2]} + ' fa-2x ' + ${card[3]}"></i>
+                    <div class="stat-number" th:text="${card[1]}"></div>
+                    <div class="text-muted small" th:text="${card[0]}"></div>
+                </div></div>
+            </div>
+        </div>
+        <div class="alert alert-warning" th:if="${stats.consultPending > 0}">
+            <i class="fas fa-exclamation-circle"></i> 有 <b th:text="${stats.consultPending}"></b> 条咨询待处理
+            <a th:href="@{/admin/consult(status=0)}" class="alert-link">去处理</a>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-7">
+                <div class="card shadow-sm"><div class="card-header bg-white">最新公告</div>
+                    <div class="list-group list-group-flush">
+                        <a th:each="n : ${latestNotices}" th:href="@{/admin/notice/edit/{id}(id=${n.id})}"
+                           class="list-group-item list-group-item-action" th:text="${n.title}"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card shadow-sm"><div class="card-header bg-white">待处理咨询</div>
+                    <div class="list-group list-group-flush">
+                        <div th:each="c : ${pendingConsults}" class="list-group-item">
+                            <a th:href="@{/admin/consult/view/{id}(id=${c.id})}" th:text="${c.title}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

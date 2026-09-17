@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='系统设置')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='系统设置')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm"><div class="card-body">
+            <form th:action="@{/admin/settings/save}" method="post">
+                <h6>基础设置</h6>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">网站标题</label>
+                        <input name="site_title" class="form-control" th:value="${config['site_title']}"></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">网站副标题</label>
+                        <input name="site_subtitle" class="form-control" th:value="${config['site_subtitle']}"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">联系电话</label>
+                        <input name="contact_phone" class="form-control" th:value="${config['contact_phone']}"></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">联系邮箱</label>
+                        <input name="contact_email" class="form-control" th:value="${config['contact_email']}"></div>
+                </div>
+                <div class="mb-3"><label class="form-label">联系地址</label>
+                    <input name="contact_address" class="form-control" th:value="${config['contact_address']}"></div>
+                <div class="mb-3"><label class="form-label">工作时间</label>
+                    <input name="contact_work_time" class="form-control" th:value="${config['contact_work_time']}"></div>
+                <hr>
+                <h6>SEO 设置</h6>
+                <div class="mb-3"><label class="form-label">SEO 关键词</label>
+                    <input name="seo_keywords" class="form-control" th:value="${config['seo_keywords']}"></div>
+                <div class="mb-3"><label class="form-label">SEO 描述</label>
+                    <textarea name="seo_description" rows="2" class="form-control" th:text="${config['seo_description']}"></textarea></div>
+                <hr>
+                <h6>备案信息</h6>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">ICP 备案号</label>
+                        <input name="icp_number" class="form-control" th:value="${config['icp_number']}"></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">版权信息</label>
+                        <input name="copyright" class="form-control" th:value="${config['copyright']}"></div>
+                </div>
+                <button class="btn btn-danger">保存设置</button>
+                <form th:action="@{/admin/settings/clearCache}" method="post" style="display:inline">
+                    <button class="btn btn-outline-warning">清除缓存</button>
+                </form>
+            </form>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container py-4">
+    <h4 class="mb-3"><i class="fas fa-envelope text-danger"></i> 联系我们</h4>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h6>联系方式</h6>
+                <p><i class="fas fa-map-marker-alt text-danger"></i> 地址：<span th:text="${siteConfig['contact_address']}"></span></p>
+                <p><i class="fas fa-phone text-danger"></i> 电话：<span th:text="${siteConfig['contact_phone']}"></span></p>
+                <p><i class="fas fa-envelope text-danger"></i> 邮箱：<span th:text="${siteConfig['contact_email']}"></span></p>
+                <p><i class="fas fa-clock text-danger"></i> 时间：<span th:text="${siteConfig['contact_work_time']}"></span></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h6>在线咨询</h6>
+                <p>如有问题，欢迎通过在线咨询渠道提交，我们将尽快回复。</p>
+                <a th:href="@{/service/consult}" class="btn btn-danger">我要咨询</a>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

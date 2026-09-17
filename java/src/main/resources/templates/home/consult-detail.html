@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h4 th:text="${consult.title}">咨询标题</h4>
+            <p class="text-muted small">提交时间：<span th:text="${#temporals.format(consult.createTime,'yyyy-MM-dd HH:mm')}"></span></p>
+            <div class="mb-3" th:utext="${consult.content}">内容</div>
+            <hr>
+            <h6>官方回复</h6>
+            <div th:if="${consult.replyContent != null}" class="alert alert-success" th:utext="${consult.replyContent}"></div>
+            <div th:else class="text-muted">暂无回复</div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

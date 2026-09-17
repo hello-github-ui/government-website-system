@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='日志详情')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='日志详情')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm"><div class="card-body">
+            <h6>日志详情 #<span th:text="${log.id}"></span></h6>
+            <table class="table">
+                <tr><th style="width:150px;">操作人</th><td th:text="${log.username}"></td></tr>
+                <tr><th>模块</th><td th:text="${log.module}"></td></tr>
+                <tr><th>动作</th><td th:text="${log.action}"></td></tr>
+                <tr><th>内容</th><td th:text="${log.content}"></td></tr>
+                <tr><th>IP</th><td th:text="${log.ipAddress}"></td></tr>
+                <tr><th>UA</th><td th:text="${log.userAgent}"></td></tr>
+                <tr><th>时间</th><td th:text="${#temporals.format(log.createTime,'yyyy-MM-dd HH:mm:ss')}"></td></tr>
+            </table>
+            <a th:href="@{/admin/log}" class="btn btn-outline-secondary">返回</a>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

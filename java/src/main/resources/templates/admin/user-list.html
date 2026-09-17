@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='前台用户')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='前台用户')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between">
+                <span>用户列表（共 <b th:text="${total}"></b> 人）</span>
+                <a th:href="@{/admin/user/add}" class="btn btn-danger btn-sm"><i class="fas fa-plus"></i> 添加用户</a>
+            </div>
+            <table class="table table-hover mb-0">
+                <thead class="table-light"><tr><th>ID</th><th>用户名</th><th>姓名</th><th>手机</th><th>状态</th><th>注册时间</th><th>操作</th></tr></thead>
+                <tbody>
+                <tr th:each="u : ${list}">
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.username}"></td>
+                    <td th:text="${u.realName}"></td>
+                    <td th:text="${u.phone}"></td>
+                    <td>
+                        <span th:if="${u.status==1}" class="badge bg-success">正常</span>
+                        <span th:if="${u.status==0}" class="badge bg-danger">禁用</span>
+                    </td>
+                    <td th:text="${#temporals.format(u.createTime,'yyyy-MM-dd')}"></td>
+                    <td><a th:href="@{/admin/user/edit/{id}(id=${u.id})}" class="btn btn-sm btn-outline-primary">编辑</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

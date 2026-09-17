@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='操作日志')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='操作日志')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between">
+                <span>日志列表（共 <b th:text="${total}"></b> 条）</span>
+                <form th:action="@{/admin/log/clear}" method="post" onsubmit="return confirm('确认清理？')">
+                    <input type="hidden" name="days" value="30">
+                    <button class="btn btn-outline-danger btn-sm">清空30天前日志</button>
+                </form>
+            </div>
+            <table class="table table-hover mb-0">
+                <thead class="table-light"><tr><th>ID</th><th>操作人</th><th>模块</th><th>动作</th><th>内容</th><th>IP</th><th>时间</th></tr></thead>
+                <tbody>
+                <tr th:each="l : ${logs}">
+                    <td th:text="${l.id}"></td>
+                    <td th:text="${l.username}"></td>
+                    <td th:text="${l.module}"></td>
+                    <td th:text="${l.action}"></td>
+                    <td th:text="${l.content}"></td>
+                    <td th:text="${l.ipAddress}"></td>
+                    <td th:text="${#temporals.format(l.createTime,'yyyy-MM-dd HH:mm')}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(logs)}"><td colspan="7" class="text-center text-muted py-4">暂无日志</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='导航编辑')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='导航编辑')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm"><div class="card-body">
+            <form th:action="${nav != null} ? @{/admin/nav/edit/{id}(id=${nav.id})} : @{/admin/nav/add}" method="post">
+                <div class="mb-3"><label class="form-label">导航名称 *</label>
+                    <input name="nav_name" class="form-control" th:value="${nav?.navName}" required></div>
+                <div class="mb-3"><label class="form-label">链接地址</label>
+                    <input name="nav_url" class="form-control" th:value="${nav?.navUrl}"></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">父级导航</label>
+                        <select name="parent_id" class="form-select">
+                            <option value="0">顶级导航</option>
+                            <option th:each="p : ${parentNavs}" th:value="${p.id}"
+                                    th:text="${p.navName}" th:selected="${nav != null && nav.parentId == p.id}"></option>
+                        </select></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">排序</label>
+                        <input name="sort" type="number" class="form-control" th:value="${nav?.sort} ?: 0"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">打开方式</label>
+                        <select name="target" class="form-select">
+                            <option value="_self" th:selected="${nav == null || nav.target == '_self'}">当前窗口</option>
+                            <option value="_blank" th:selected="${nav != null && nav.target == '_blank'}">新窗口</option>
+                        </select></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">是否显示</label>
+                        <select name="isShow" class="form-select">
+                            <option value="1" th:selected="${nav == null || nav.isShow == 1}">显示</option>
+                            <option value="0" th:selected="${nav != null && nav.isShow == 0}">隐藏</option>
+                        </select></div>
+                </div>
+                <button class="btn btn-danger">保存</button>
+                <a th:href="@{/admin/nav}" class="btn btn-outline-secondary">返回</a>
+            </form>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h3 th:text="${judicial.caseName}">案件名称</h3>
+            <table class="table table-sm">
+                <tr><th>案号</th><td th:text="${judicial.caseNo}"></td></tr>
+                <tr><th>审理法院</th><td th:text="${judicial.court}"></td></tr>
+                <tr><th>案件类型</th><td th:text="${judicial.caseType}"></td></tr>
+                <tr><th>裁判日期</th><td th:text="${#temporals.format(judicial.judgeDate,'yyyy-MM-dd')}"></td></tr>
+            </table>
+            <div class="detail-content" th:utext="${judicial.content}">文书内容</div>
+        </div>
+    </div>
+    <a th:href="@{/judicial}" class="btn btn-outline-secondary mt-3"><i class="fas fa-arrow-left"></i> 返回检索</a>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

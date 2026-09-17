@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='角色编辑')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='角色编辑')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm"><div class="card-body">
+            <form th:action="${role != null} ? @{/admin/role/edit/{id}(id=${role.id})} : @{/admin/role/add}" method="post">
+                <div class="mb-3"><label class="form-label">角色名称 *</label>
+                    <input name="role_name" class="form-control" th:value="${role?.roleName}" required></div>
+                <div class="mb-3"><label class="form-label">角色描述</label>
+                    <input name="role_desc" class="form-control" th:value="${role?.roleDesc}"></div>
+                <div class="mb-3"><label class="form-label">权限分配</label>
+                    <div class="border rounded p-3">
+                        <div th:each="entry : ${permissions}">
+                            <strong th:text="${entry.value['name']}"></strong>
+                            <div class="form-check" th:each="p : ${entry.value['permissions']}">
+                                <input class="form-check-input" type="checkbox" name="permissions" th:value="${p.key}"
+                                       th:checked="${#lists.contains(rolePermissions, p.key)}">
+                                <label class="form-check-label" th:text="${p.value}"></label>
+                            </div>
+                        </div>
+                    </div></div>
+                <div class="mb-3"><label class="form-label">状态</label>
+                    <select name="status" class="form-select">
+                        <option value="1" th:selected="${role == null || role.status == 1}">启用</option>
+                        <option value="0" th:selected="${role != null && role.status == 0}">禁用</option>
+                    </select></div>
+                <button class="btn btn-danger">保存</button>
+                <a th:href="@{/admin/role}" class="btn btn-outline-secondary">返回</a>
+            </form>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

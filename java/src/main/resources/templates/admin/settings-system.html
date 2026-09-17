@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='系统信息')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='系统信息')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm"><div class="card-body">
+            <table class="table">
+                <tr><th style="width:200px;">Java 版本</th><td th:text="${info.javaVersion}"></td></tr>
+                <tr><th>操作系统</th><td th:text="${info.osName}"></td></tr>
+                <tr><th>系统时间</th><td th:text="${info.serverTime}"></td></tr>
+            </table>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

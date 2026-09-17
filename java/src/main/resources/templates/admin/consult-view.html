@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments/layout :: head(title='处理咨询')}"></head>
+<body>
+<div th:insert="~{admin/fragments/layout :: aside}"></div>
+<div class="admin-main">
+    <div th:insert="~{admin/fragments/layout :: topbar(title='处理咨询')}"></div>
+    <div class="admin-content">
+        <div class="card shadow-sm mb-3"><div class="card-body">
+            <h5 th:text="${consult.title}"></h5>
+            <p class="text-muted small">提交时间：<span th:text="${#temporals.format(consult.createTime,'yyyy-MM-dd HH:mm')}"></span></p>
+            <div th:utext="${consult.content}"></div>
+        </div></div>
+        <div class="card shadow-sm"><div class="card-body">
+            <h6>回复</h6>
+            <form th:action="@{/admin/consult/reply}" method="post">
+                <input type="hidden" name="id" th:value="${consult.id}">
+                <div class="mb-3">
+                    <textarea name="reply" rows="5" class="form-control" th:text="${consult.replyContent}"></textarea>
+                </div>
+                <button class="btn btn-danger">提交回复</button>
+                <a th:href="@{/admin/consult}" class="btn btn-outline-secondary">返回列表</a>
+            </form>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

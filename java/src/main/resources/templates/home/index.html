@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+
+<!-- 轮播 / Hero -->
+<section class="hero-section" style="background:linear-gradient(135deg,#dc2626,#7f1d1d);">
+    <div class="container py-5 text-white">
+        <h1 class="display-5 fw-bold" th:text="${siteConfig['site_title']} ?: '政务服务门户网站'">政府官网</h1>
+        <p class="lead" th:text="${siteConfig['site_subtitle']} ?: '政务服务门户网站'">副标题</p>
+        <a th:href="@{/service}" class="btn btn-light btn-lg rounded-pill px-4 me-2">开始办事</a>
+        <a th:href="@{/notice}" class="btn btn-outline-light btn-lg rounded-pill px-4">查看公告</a>
+    </div>
+</section>
+
+<!-- 快捷入口 -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-6 col-lg-3" th:each="card : ${
+                { {'/notice','政务公告','最新政府公告通知','fa-bullhorn','bg-gradient-red'},
+                  {'/policy','政策法规','政策法规文件查询','fa-file-alt','bg-gradient-orange'},
+                  {'/service','在线办事','便民服务在线办理','fa-tasks','bg-gradient-blue'},
+                  {'/judicial','裁判文书','司法文书公开检索','fa-gavel','bg-gradient-purple'} }
+            }">
+                <a th:href="${card[0]}" class="text-decoration-none">
+                    <div class="card h-100 text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="quick-icon-wrapper mb-3" th:classappend="${card[4]}">
+                                <i th:class="${card[3]}"></i>
+                            </div>
+                            <h6 class="text-dark" th:text="${card[1]}">标题</h6>
+                            <p class="small text-muted" th:text="${card[2]}">描述</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 最新公告与政策 -->
+<section class="pb-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <h5 class="mb-3"><i class="fas fa-bullhorn text-danger"></i> 最新公告
+                    <a th:href="@{/notice}" class="btn btn-outline-danger btn-sm float-end">更多</a></h5>
+                <div class="list-group shadow-sm">
+                    <a th:each="n : ${notices}" th:href="@{/notice/detail/{id}(id=${n.id})}"
+                       class="list-group-item list-group-item-action d-flex justify-content-between">
+                        <span>
+                            <span th:if="${n.isTop == 1}" class="badge bg-danger">置顶</span>
+                            <span th:text="${n.title}">标题</span>
+                        </span>
+                        <small class="text-muted" th:text="${#temporals.format(n.publishTime,'yyyy-MM-dd')}">日期</small>
+                    </a>
+                    <div th:if="${#lists.isEmpty(notices)}" class="list-group-item text-center text-muted">暂无数据</div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="mb-3"><i class="fas fa-file-alt text-danger"></i> 最新政策</h5>
+                <div class="list-group shadow-sm">
+                    <a th:each="p : ${policies}" th:href="@{/policy/detail/{id}(id=${p.id})}"
+                       class="list-group-item list-group-item-action">
+                        <div class="fw-semibold" th:text="${p.title}">政策</div>
+                        <small class="text-muted" th:text="${p.publishOrg} + ' · ' + ${#temporals.format(p.publishDate,'yyyy-MM-dd')}">来源</small>
+                    </a>
+                    <div th:if="${#lists.isEmpty(policies)}" class="list-group-item text-center text-muted">暂无数据</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

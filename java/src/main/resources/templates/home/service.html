@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container py-4">
+    <h4 class="mb-3"><i class="fas fa-tasks text-danger"></i> 公众服务</h4>
+    <div class="row g-4">
+        <div class="col-md-4" th:each="s : ${
+            { {'/service/guide','办事指南','事项办理流程与材料指引','fa-list-alt','bg-gradient-blue'},
+              {'/service/consult','在线咨询','提交在线咨询或投诉建议','fa-comments','bg-gradient-orange'},
+              {'/judicial','裁判文书','司法文书公开检索','fa-gavel','bg-gradient-purple'} }
+        }">
+            <a th:href="${s[0]}" class="text-decoration-none">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="quick-icon-wrapper mb-2" th:classappend="${s[4]}"><i th:class="${s[3]}"></i></div>
+                        <h6 th:text="${s[1]}"></h6>
+                        <p class="small text-muted" th:text="${s[2]}"></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

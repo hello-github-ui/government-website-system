@@ -1,0 +1,20 @@
+/* 政府官网系统 - 前台样式 */
+:root { --gov-red: #dc2626; }
+body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background:#f8f9fa; }
+.main-navbar { background: linear-gradient(135deg,#b91c1c,#7f1d1d); }
+.navbar-brand { font-weight: 700; }
+.hero-section .hero-slide { min-height: 320px; display:flex; align-items:center; color:#fff; }
+.quick-card { transition: transform .2s; }
+.quick-card:hover { transform: translateY(-4px); }
+.quick-icon-wrapper { width:56px;height:56px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:24px; }
+.bg-gradient-red { background:linear-gradient(135deg,#ef4444,#b91c1c); }
+.bg-gradient-orange { background:linear-gradient(135deg,#f97316,#ea580c); }
+.bg-gradient-blue { background:linear-gradient(135deg,#3b82f6,#2563eb); }
+.bg-gradient-purple { background:linear-gradient(135deg,#a855f7,#7c3aed); }
+.notice-list .notice-item { border-left: 3px solid #dc2626; }
+.pagination-wrap { margin: 20px 0; }
+.detail-content { font-size:16px; line-height:1.9; }
+.sidebar-facet { background:#fff; border-radius:8px; padding:16px; }
+.stat-number { font-size:2rem; font-weight:700; color:#dc2626; }
+footer.main-footer a:hover { color:#fff !important; }
+.form-signin { max-width: 400px; margin: 40px auto; }

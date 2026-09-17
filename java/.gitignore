@@ -1,0 +1,25 @@
+# ===== Java 重构项目忽略文件 =====
+# 编译产物
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# 日志
+*.log
+app.log
+app-err.log
+logs/
+
+# 上传文件（运行时生成）
+uploads/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# 系统
+.DS_Store
+Thumbs.db

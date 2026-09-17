@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<!-- 后台公共 <head> 片段：页面标题直接取模型中的 title -->
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title != null} ? ${title} + ' - ' + ${siteConfig['site_title']} : ${siteConfig['site_title']}">政府官网</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- 前台页头片段：顶部信息栏 + 主导航 + 闪存消息 -->
+<div th:fragment="top">
+    <div class="top-bar d-none d-md-block bg-light border-bottom">
+        <div class="container d-flex justify-content-between py-2 small">
+            <div>
+                <span class="me-3"><i class="fas fa-phone-alt text-danger"></i>
+                    <span th:text="${siteConfig['contact_phone']} ?: '12345 政务服务热线'">电话</span></span>
+                <span><i class="fas fa-envelope text-danger"></i>
+                    <span th:text="${siteConfig['contact_email']} ?: 'contact@gov.cn'">邮箱</span></span>
+            </div>
+            <div>
+                <a th:href="@{/admin}" class="text-muted text-decoration-none"><i class="fas fa-cog"></i> 管理后台</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark main-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-landmark me-2"></i>
+                <span th:text="${siteConfig['site_title']} ?: '政府官网'">政府官网</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="fas fa-home"></i> 首页</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/notice}"><i class="fas fa-bullhorn"></i> 政务公开</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/policy}"><i class="fas fa-file-alt"></i> 政策法规</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/service}"><i class="fas fa-tasks"></i> 公众服务</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/judicial}"><i class="fas fa-gavel"></i> 裁判文书</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/consult}"><i class="fas fa-comments"></i> 咨询投诉</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/contact}"><i class="fas fa-envelope"></i> 联系我们</a></li>
+                </ul>
+                <div class="ms-lg-3">
+                    <div th:if="${currentUserId != null}">
+                        <a th:href="@{/user/profile}" class="btn btn-outline-light btn-sm me-1">
+                            <i class="fas fa-user"></i> <span th:text="${currentUserName}">用户</span></a>
+                        <a th:href="@{/logout}" class="btn btn-outline-light btn-sm"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                    </div>
+                    <div th:unless="${currentUserId != null}">
+                        <a th:href="@{/login}" class="btn btn-light btn-sm me-1">登录</a>
+                        <a th:href="@{/register}" class="btn btn-outline-light btn-sm">注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-3" th:if="${flashMessage != null}">
+        <div class="alert alert-success" th:text="${flashMessage}">操作成功</div>
+    </div>
+    <div class="container mt-3" th:if="${flashError != null}">
+        <div class="alert alert-danger" th:text="${flashError}">操作失败</div>
+    </div>
+</div>
+</body>
+</html>

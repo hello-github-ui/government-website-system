@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container">
+    <div class="form-signin">
+        <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
+        <div th:if="${flashMessage != null}" class="alert alert-success" th:text="${flashMessage}"></div>
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h4 class="text-center mb-4"><i class="fas fa-user-lock text-danger"></i> 用户登录</h4>
+                <form th:action="@{/login/doLogin}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">用户名</label>
+                        <input name="username" class="form-control" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">密码</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <button class="btn btn-danger w-100">登 录</button>
+                </form>
+                <div class="mt-3 text-center small">
+                    还没有账号？<a th:href="@{/register}">立即注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

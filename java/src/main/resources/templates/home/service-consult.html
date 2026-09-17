@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container py-4">
+    <div class="card shadow-sm" style="max-width:720px;margin:0 auto;">
+        <div class="card-body p-4">
+            <h4 class="mb-3">在线咨询</h4>
+            <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
+            <div th:if="${flashMessage != null}" class="alert alert-success" th:text="${flashMessage}"></div>
+            <form th:action="@{/service/submitConsult}" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">姓名 *</label>
+                        <input name="name" class="form-control" required></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">电话 *</label>
+                        <input name="phone" class="form-control" required></div>
+                </div>
+                <div class="mb-3"><label class="form-label">邮箱</label>
+                    <input type="email" name="email" class="form-control"></div>
+                <div class="mb-3"><label class="form-label">类型</label>
+                    <select name="type" class="form-select">
+                        <option value="1">咨询</option><option value="2">投诉</option><option value="3">建议</option>
+                    </select></div>
+                <div class="mb-3"><label class="form-label">标题 *</label>
+                    <input name="title" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">内容 *</label>
+                    <textarea name="content" rows="4" class="form-control" required></textarea></div>
+                <button class="btn btn-danger">提交咨询</button>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>

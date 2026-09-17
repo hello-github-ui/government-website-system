@@ -1,0 +1,93 @@
+# ===================================================================
+# 政府官网系统 - 应用配置
+# 后端：Spring Boot 3 + MyBatis + Thymeleaf（前后端不分离）
+# ===================================================================
+server:
+  # 服务端口
+  port: 8080
+  servlet:
+    session:
+      timeout: 7200s
+      cookie:
+        http-only: true
+        same-site: Lax
+  compression:
+    enabled: true
+    mime-types: application/json,text/html,text/css,application/javascript,text/xml,text/plain
+
+spring:
+  application:
+    name: gov-website-system
+
+  # ----------------- 数据源（远程 MySQL） -----------------
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.75.179.59:3306/gov_system?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: root
+    password: "6228332zzz@@@"
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 60000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: GovHikariCP
+
+  # ----------------- Redis 缓存 -----------------
+  data:
+    redis:
+      host: 106.75.179.59
+      port: 6379
+      password: "123456"
+      database: 0
+      timeout: 5000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+
+  # ----------------- Thymeleaf 模板 -----------------
+  thymeleaf:
+    cache: true
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+    servlet:
+      content-type: text/html
+
+  # ----------------- 文件上传 -----------------
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# ----------------- MyBatis -----------------
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.gov.gows.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+
+# ----------------- 业务自定义配置 -----------------
+gov:
+  # 表前缀
+  table-prefix: gov_
+  # 上传文件存储目录（相对运行目录）
+  upload-path: ./uploads/
+  # 上传允许扩展名
+  upload-allowed-ext: jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,mp4
+  # 登录安全
+  security:
+    login-max-fail: 5
+    login-lock-minutes: 30
+  # 缓存：是否启用 Redis（false 时回退本地内存缓存）
+  cache:
+    type: redis
+
+logging:
+  level:
+    com.gov.gows: info
+    org.mybatis: warn

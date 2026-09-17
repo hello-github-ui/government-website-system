@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{home/fragments/header :: head}"></head>
+<body>
+<header th:replace="~{home/fragments/header :: top}"></header>
+<div class="container py-4">
+    <h4 class="mb-3">办事指南</h4>
+    <div class="card shadow-sm p-4 detail-content">
+        <p><strong>一、事项范围</strong></p>
+        <p>本平台提供政务信息公开、政策法规查询、裁判文书检索、在线咨询投诉等服务。</p>
+        <p><strong>二、办理流程</strong></p>
+        <p>选择服务事项 → 在线填报 → 提交材料 → 审核办理 → 结果反馈。</p>
+        <p><strong>三、办理时间</strong></p>
+        <p th:text="${'工作时间：' + (siteConfig['contact_work_time'] ?: '周一至周五 9:00-17:00')}"></p>
+    </div>
+</div>
+<footer th:replace="~{home/fragments/footer :: body}"></footer>
+</body>
+</html>
