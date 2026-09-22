@@ -1,6 +1,6 @@
 # ===== Java 重构项目忽略文件 =====
 # 编译产物
-target/
+java/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 # 日志
@@ -23,3 +23,5 @@ uploads/
 # 系统
 .DS_Store
 Thumbs.db
+**/.idea/
+**/*.iml
