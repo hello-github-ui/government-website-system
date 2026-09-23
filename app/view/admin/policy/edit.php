@@ -17,12 +17,12 @@ include APP_PATH . 'view/admin/public/header.php';
         <div class="card-body">
             <div class="form-group">
                 <label>标题 <span class="text-danger">*</span></label>
-                <input type="text" name="title" class="form-control" required value="<?php echo htmlspecialchars($info['title']); ?>" placeholder="请输入政策标题">
+                <input type="text" name="title" autocomplete="off" class="form-control" required value="<?php echo htmlspecialchars($info['title']); ?>" placeholder="请输入政策标题">
             </div>
             
             <div class="form-group">
                 <label>发布部门</label>
-                <input type="text" name="publish_org" class="form-control" value="<?php echo htmlspecialchars($info['publish_org'] ?? ''); ?>" placeholder="请输入发布部门">
+                <input type="text" name="publish_org" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($info['publish_org'] ?? ''); ?>" placeholder="请输入发布部门">
             </div>
             
             <div class="form-group">
@@ -34,7 +34,7 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>发布日期</label>
-                        <input type="date" name="publish_date" class="form-control" value="<?php echo $info['publish_date'] ?? date('Y-m-d'); ?>">
+                        <input type="date" name="publish_date" autocomplete="off" class="form-control" value="<?php echo $info['publish_date'] ?? date('Y-m-d'); ?>">
                     </div>
                 </div>
                 <div class="col-md-6">

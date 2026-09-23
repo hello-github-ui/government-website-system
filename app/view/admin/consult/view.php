@@ -60,7 +60,7 @@ include APP_PATH . 'view/admin/public/header.php';
                 <?php endif; ?>
                 
                 <form action="/admin/consult/reply" method="POST">
-                    <input type="hidden" name="id" value="<?php echo $info['id']; ?>">
+                    <input type="hidden" name="id" autocomplete="off" value="<?php echo $info['id']; ?>">
                     <div class="form-group">
                         <label>回复内容</label>
                         <textarea name="reply" class="form-control" rows="6" placeholder="请输入回复内容" required></textarea>

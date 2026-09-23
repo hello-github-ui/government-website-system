@@ -139,7 +139,7 @@
                 <div class="modal-body pt-3">
                     <form action="/search" method="GET">
                         <div class="input-group input-group-lg">
-                            <input type="text" name="q" class="form-control" placeholder="请输入关键词搜索..." autofocus>
+                            <input type="text" name="q" autocomplete="off" class="form-control" placeholder="请输入关键词搜索..." autofocus>
                             <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search me-1"></i>搜索
                             </button>

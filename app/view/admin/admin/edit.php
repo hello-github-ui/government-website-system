@@ -19,7 +19,7 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>用户名</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($info['username']); ?>" disabled>
+                        <input type="text" class="form-control" autocomplete="off" value="<?php echo htmlspecialchars($info['username']); ?>" disabled>
                     </div>
                 </div>
                 <div class="col-md-6">

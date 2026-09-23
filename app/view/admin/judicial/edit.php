@@ -19,13 +19,13 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>案号 <span class="text-danger">*</span></label>
-                        <input type="text" name="case_no" class="form-control" required value="<?php echo htmlspecialchars($info['case_no']); ?>" placeholder="请输入案号">
+                        <input type="text" name="case_no" autocomplete="off" class="form-control" required value="<?php echo htmlspecialchars($info['case_no']); ?>" placeholder="请输入案号">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>案件名称 <span class="text-danger">*</span></label>
-                        <input type="text" name="case_name" class="form-control" required value="<?php echo htmlspecialchars($info['case_name']); ?>" placeholder="请输入案件名称">
+                        <input type="text" name="case_name" autocomplete="off" class="form-control" required value="<?php echo htmlspecialchars($info['case_name']); ?>" placeholder="请输入案件名称">
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>法院 <span class="text-danger">*</span></label>
-                        <input type="text" name="court" class="form-control" required value="<?php echo htmlspecialchars($info['court']); ?>" placeholder="请输入法院名称">
+                        <input type="text" name="court" autocomplete="off" class="form-control" required value="<?php echo htmlspecialchars($info['court']); ?>" placeholder="请输入法院名称">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -59,7 +59,7 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>判决日期</label>
-                        <input type="date" name="judge_date" class="form-control" value="<?php echo $info['judge_date'] ?? date('Y-m-d'); ?>">
+                        <input type="date" name="judge_date" autocomplete="off" class="form-control" value="<?php echo $info['judge_date'] ?? date('Y-m-d'); ?>">
                     </div>
                 </div>
                 <div class="col-md-6">

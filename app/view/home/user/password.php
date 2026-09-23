@@ -24,18 +24,18 @@
                     <form action="/user/password" method="POST">
                         <div class="mb-3">
                             <label class="form-label">原密码</label>
-                            <input type="password" name="old_password" class="form-control" required>
+                            <input type="password" name="old_password" autocomplete="off" class="form-control" required>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">新密码</label>
-                            <input type="password" name="new_password" class="form-control" required minlength="6">
+                            <input type="password" name="new_password" autocomplete="off" class="form-control" required minlength="6">
                             <div class="form-text">密码长度至少6位</div>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">确认新密码</label>
-                            <input type="password" name="confirm_password" class="form-control" required>
+                            <input type="password" autocomplete="off" name="confirm_password" class="form-control" required>
                         </div>
                         
                         <div class="d-grid">

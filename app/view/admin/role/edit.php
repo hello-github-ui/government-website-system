@@ -14,7 +14,7 @@
                     <form action="/admin/role/edit?id=<?= $role['id'] ?>" method="post">
                         <div class="mb-3">
                             <label class="form-label">角色名称 <span class="text-danger">*</span></label>
-                            <input type="text" name="role_name" class="form-control" value="<?= htmlspecialchars($role['role_name']) ?>" required>
+                            <input type="text" name="role_name" autocomplete="off" class="form-control" value="<?= htmlspecialchars($role['role_name']) ?>" required>
                         </div>
                         
                         <div class="mb-3">
@@ -33,7 +33,7 @@
                                             <?php foreach ($group['permissions'] as $permKey => $permName): ?>
                                             <div class="col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="permissions[]" value="<?= $permKey ?>" id="perm_<?= $permKey ?>" <?= in_array($permKey, $rolePermissions) ? 'checked' : '' ?>>
+                                                    <input class="form-check-input" autocomplete="off" type="checkbox" name="permissions[]" value="<?= $permKey ?>" id="perm_<?= $permKey ?>" <?= in_array($permKey, $rolePermissions) ? 'checked' : '' ?>>
                                                     <label class="form-check-label" for="perm_<?= $permKey ?>"><?= $permName ?></label>
                                                 </div>
                                             </div>

@@ -17,7 +17,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <form action="/judicial" method="GET" class="d-flex">
-                        <input type="text" name="keyword" class="form-control form-control-lg me-2" 
+                        <input type="text" name="keyword" autocomplete="off" class="form-control form-control-lg me-2"
                                placeholder="请输入案件名称、案号或关键词" 
                                value="<?php echo htmlspecialchars($keyword); ?>">
                         <button class="btn btn-primary btn-lg" type="submit">

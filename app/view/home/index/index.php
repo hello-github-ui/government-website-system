@@ -315,7 +315,7 @@
                         <span class="input-group-text border-0 bg-white ps-4">
                             <i class="fas fa-search text-muted"></i>
                         </span>
-                        <input type="text" name="keyword" class="form-control border-0 py-3" placeholder="请输入案件名称、案号或关键词" aria-label="搜索裁判文书">
+                        <input type="text" name="keyword" autocomplete="off" class="form-control border-0 py-3" placeholder="请输入案件名称、案号或关键词" aria-label="搜索裁判文书">
                         <button class="btn btn-gradient-primary px-5 fw-semibold" type="submit">
                             检索
                         </button>

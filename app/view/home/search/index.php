@@ -9,7 +9,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <form action="/search" method="GET" class="d-flex">
-                        <input type="text" name="q" class="form-control form-control-lg me-2" 
+                        <input type="text" name="q" autocomplete="off" class="form-control form-control-lg me-2"
                                placeholder="请输入关键词搜索..." 
                                value="<?php echo htmlspecialchars($keyword); ?>">
                         <button class="btn btn-primary btn-lg" type="submit">

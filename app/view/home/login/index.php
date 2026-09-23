@@ -17,12 +17,12 @@
                     <div class="auth-body">
                         <form action="/login/doLogin" method="POST" class="auth-form">
                             <div class="form-floating mb-3">
-                                <input type="text" name="username" class="form-control" id="username" placeholder="用户名" required>
+                                <input type="text" name="username" class="form-control" id="username" placeholder="用户名" autocomplete="off" required>
                                 <label for="username"><i class="fas fa-user me-2 text-muted"></i>用户名</label>
                             </div>
                             
                             <div class="form-floating mb-4">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="密码" required>
+                                <input type="password" name="password" class="form-control" id="password" autocomplete="off" placeholder="密码" required>
                                 <label for="password"><i class="fas fa-lock me-2 text-muted"></i>密码</label>
                             </div>
                             

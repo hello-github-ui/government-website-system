@@ -14,7 +14,7 @@
                     <form action="/admin/language/edit?id=<?= $config['id'] ?>" method="post">
                         <div class="mb-3">
                             <label class="form-label">语言键</label>
-                            <input type="text" class="form-control" value="<?= htmlspecialchars($config['lang_key']) ?>" disabled>
+                            <input type="text" autocomplete="off" class="form-control" value="<?= htmlspecialchars($config['lang_key']) ?>" disabled>
                             <div class="form-text">语言键不可修改</div>
                         </div>
                         
@@ -43,7 +43,7 @@
                         
                         <div class="mb-3">
                             <div class="form-check">
-                                <input type="checkbox" name="is_default" value="1" class="form-check-input" id="isDefault" <?= $config['is_default'] ? 'checked' : '' ?>>
+                                <input type="checkbox" autocomplete="off" name="is_default" value="1" class="form-check-input" id="isDefault" <?= $config['is_default'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="isDefault">设为默认值</label>
                             </div>
                         </div>

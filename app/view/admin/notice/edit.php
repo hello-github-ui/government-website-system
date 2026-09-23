@@ -17,7 +17,7 @@ include APP_PATH . 'view/admin/public/header.php';
         <div class="card-body">
             <div class="form-group">
                 <label>标题 <span class="text-danger">*</span></label>
-                <input type="text" name="title" class="form-control" required value="<?php echo htmlspecialchars($info['title']); ?>" placeholder="请输入公告标题">
+                <input type="text" name="title" autocomplete="off" class="form-control" required value="<?php echo htmlspecialchars($info['title']); ?>" placeholder="请输入公告标题">
             </div>
             
             <div class="form-group">

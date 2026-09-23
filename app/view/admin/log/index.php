@@ -35,13 +35,13 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <input type="date" name="date_start" class="form-control" value="<?= $dateStart ?? '' ?>" placeholder="开始日期">
+                            <input type="date" autocomplete="off" name="date_start" class="form-control" value="<?= $dateStart ?? '' ?>" placeholder="开始日期">
                         </div>
                         <div class="col-md-2">
-                            <input type="date" name="date_end" class="form-control" value="<?= $dateEnd ?? '' ?>" placeholder="结束日期">
+                            <input type="date" autocomplete="off" name="date_end" class="form-control" value="<?= $dateEnd ?? '' ?>" placeholder="结束日期">
                         </div>
                         <div class="col-md-2">
-                            <input type="text" name="keyword" class="form-control" value="<?= htmlspecialchars($keyword ?? '') ?>" placeholder="关键词">
+                            <input type="text" autocomplete="off" name="keyword" class="form-control" value="<?= htmlspecialchars($keyword ?? '') ?>" placeholder="关键词">
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-outline-primary">筛选</button>

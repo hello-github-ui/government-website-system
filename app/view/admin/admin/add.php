@@ -19,13 +19,13 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>用户名 <span class="text-danger">*</span></label>
-                        <input type="text" name="username" class="form-control" required placeholder="请输入用户名">
+                        <input type="text" name="username" class="form-control" autocomplete="off" required placeholder="请输入用户名">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>密码 <span class="text-danger">*</span></label>
-                        <input type="password" name="password" class="form-control" required placeholder="请输入密码">
+                        <input type="password" name="password" class="form-control" autocomplete="off" required placeholder="请输入密码">
                     </div>
                 </div>
             </div>
@@ -34,13 +34,13 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>姓名</label>
-                        <input type="text" name="name" class="form-control" placeholder="请输入姓名">
+                        <input type="text" name="name" class="form-control" autocomplete="off" placeholder="请输入姓名">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>邮箱</label>
-                        <input type="email" name="email" class="form-control" placeholder="请输入邮箱">
+                        <input type="email" name="email" class="form-control" autocomplete="off" placeholder="请输入邮箱">
                     </div>
                 </div>
             </div>

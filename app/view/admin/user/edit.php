@@ -19,13 +19,13 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>用户名</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($info['username']); ?>" disabled>
+                        <input type="text" class="form-control" autocomplete="off" value="<?php echo htmlspecialchars($info['username']); ?>" disabled>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>密码 <small class="text-muted">（留空则不修改）</small></label>
-                        <input type="password" name="password" class="form-control" placeholder="请输入新密码">
+                        <input type="password" name="password" autocomplete="off" class="form-control" placeholder="请输入新密码">
                     </div>
                 </div>
             </div>
@@ -34,13 +34,13 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>姓名</label>
-                        <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($info['name'] ?? ''); ?>" placeholder="请输入姓名">
+                        <input type="text" name="name" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($info['name'] ?? ''); ?>" placeholder="请输入姓名">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>邮箱</label>
-                        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($info['email'] ?? ''); ?>" placeholder="请输入邮箱">
+                        <input type="email" name="email" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($info['email'] ?? ''); ?>" placeholder="请输入邮箱">
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@ include APP_PATH . 'view/admin/public/header.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>手机</label>
-                        <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($info['phone'] ?? ''); ?>" placeholder="请输入手机号">
+                        <input type="text" name="phone" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($info['phone'] ?? ''); ?>" placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="col-md-6">

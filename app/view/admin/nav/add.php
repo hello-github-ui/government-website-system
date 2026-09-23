@@ -14,12 +14,12 @@
                     <form action="/admin/nav/add" method="post">
                         <div class="mb-3">
                             <label class="form-label">导航名称 <span class="text-danger">*</span></label>
-                            <input type="text" name="nav_name" class="form-control" required>
+                            <input type="text" name="nav_name" autocomplete="off" class="form-control" required>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">链接地址 <span class="text-danger">*</span></label>
-                            <input type="text" name="nav_url" class="form-control" required placeholder="如：/about">
+                            <input type="text" name="nav_url" autocomplete="off" class="form-control" required placeholder="如：/about">
                         </div>
                         
                         <div class="mb-3">
@@ -50,13 +50,13 @@
                         
                         <div class="mb-3">
                             <label class="form-label">图标类名</label>
-                            <input type="text" name="icon" class="form-control" placeholder="如：house">
+                            <input type="text" name="icon" autocomplete="off" class="form-control" placeholder="如：house">
                             <div class="form-text">Bootstrap Icons 图标名称</div>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">排序</label>
-                            <input type="number" name="sort" class="form-control" value="0">
+                            <input type="number" autocomplete="off" name="sort" class="form-control" value="0">
                             <div class="form-text">数字越小越靠前</div>
                         </div>
                         

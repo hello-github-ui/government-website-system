@@ -14,12 +14,12 @@
                     <form action="/admin/nav/edit?id=<?= $nav['id'] ?>" method="post">
                         <div class="mb-3">
                             <label class="form-label">导航名称 <span class="text-danger">*</span></label>
-                            <input type="text" name="nav_name" class="form-control" value="<?= htmlspecialchars($nav['nav_name']) ?>" required>
+                            <input type="text" name="nav_name" autocomplete="off" class="form-control" value="<?= htmlspecialchars($nav['nav_name']) ?>" required>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">链接地址 <span class="text-danger">*</span></label>
-                            <input type="text" name="nav_url" class="form-control" value="<?= htmlspecialchars($nav['nav_url']) ?>" required>
+                            <input type="text" name="nav_url" autocomplete="off" class="form-control" value="<?= htmlspecialchars($nav['nav_url']) ?>" required>
                         </div>
                         
                         <div class="mb-3">
@@ -50,12 +50,12 @@
                         
                         <div class="mb-3">
                             <label class="form-label">图标类名</label>
-                            <input type="text" name="icon" class="form-control" value="<?= htmlspecialchars($nav['icon'] ?? '') ?>" placeholder="如：house">
+                            <input type="text" name="icon" autocomplete="off" class="form-control" value="<?= htmlspecialchars($nav['icon'] ?? '') ?>" placeholder="如：house">
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">排序</label>
-                            <input type="number" name="sort" class="form-control" value="<?= $nav['sort'] ?>">
+                            <input type="number" name="sort" autocomplete="off" class="form-control" value="<?= $nav['sort'] ?>">
                         </div>
                         
                         <div class="mb-3">

@@ -14,7 +14,7 @@
                     <form action="/admin/language/add" method="post">
                         <div class="mb-3">
                             <label class="form-label">语言键 <span class="text-danger">*</span></label>
-                            <input type="text" name="lang_key" class="form-control" required placeholder="如：common.home">
+                            <input type="text" name="lang_key" autocomplete="off" class="form-control" required placeholder="如：common.home">
                             <div class="form-text">唯一标识，建议使用模块.名称的格式</div>
                         </div>
                         
@@ -43,7 +43,7 @@
                         
                         <div class="mb-3">
                             <div class="form-check">
-                                <input type="checkbox" name="is_default" value="1" class="form-check-input" id="isDefault">
+                                <input type="checkbox" autocomplete="off" name="is_default" value="1" class="form-check-input" id="isDefault">
                                 <label class="form-check-label" for="isDefault">设为默认值</label>
                             </div>
                         </div>

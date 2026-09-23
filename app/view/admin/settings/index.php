@@ -17,33 +17,33 @@ include APP_PATH . 'view/admin/public/header.php';
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>网站标题 <span class="text-danger">*</span></label>
-                                <input type="text" name="site_title" class="form-control" value="<?php echo htmlspecialchars($config['site_title'] ?? ''); ?>" required>
+                                <input type="text" name="site_title" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($config['site_title'] ?? ''); ?>" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>网站副标题</label>
-                                <input type="text" name="site_subtitle" class="form-control" value="<?php echo htmlspecialchars($config['site_subtitle'] ?? ''); ?>">
+                                <input type="text" name="site_subtitle" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($config['site_subtitle'] ?? ''); ?>">
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label>网站URL <span class="text-danger">*</span></label>
-                        <input type="url" name="site_url" class="form-control" value="<?php echo htmlspecialchars($config['site_url'] ?? ''); ?>" required placeholder="https://www.example.com">
+                        <input type="url" name="site_url" class="form-control" autocomplete="off" value="<?php echo htmlspecialchars($config['site_url'] ?? ''); ?>" required placeholder="https://www.example.com">
                     </div>
                     
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>网站Logo</label>
-                                <input type="text" name="site_logo" class="form-control" value="<?php echo htmlspecialchars($config['site_logo'] ?? ''); ?>" placeholder="/assets/images/logo.png">
+                                <input type="text" name="site_logo" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($config['site_logo'] ?? ''); ?>" placeholder="/assets/images/logo.png">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>网站Favicon</label>
-                                <input type="text" name="site_favicon" class="form-control" value="<?php echo htmlspecialchars($config['site_favicon'] ?? ''); ?>" placeholder="/favicon.ico">
+                                <input type="text" name="site_favicon" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($config['site_favicon'] ?? ''); ?>" placeholder="/favicon.ico">
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ include APP_PATH . 'view/admin/public/header.php';
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>SEO关键词</label>
-                                <input type="text" name="seo_keywords" class="form-control" value="<?php echo htmlspecialchars($config['seo_keywords'] ?? ''); ?>" placeholder="关键词1,关键词2,关键词3">
+                                <input type="text" name="seo_keywords" autocomplete="off" class="form-control" value="<?php echo htmlspecialchars($config['seo_keywords'] ?? ''); ?>" placeholder="关键词1,关键词2,关键词3">
                             </div>
                         </div>
                         <div class="col-md-6">

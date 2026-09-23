@@ -27,7 +27,7 @@
                         
                         <div class="mb-3">
                             <label for="title" class="form-label">标题 <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="title" name="title" 
+                            <input type="text" class="form-control" autocomplete="off" id="title" name="title"
                                    placeholder="请输入咨询标题" maxlength="200" required>
                             <div class="form-text">标题长度不超过200字</div>
                         </div>
@@ -41,13 +41,13 @@
                         <div class="mb-3">
                             <label class="form-label">公开设置</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="is_public" id="public1" value="1" checked>
+                                <input class="form-check-input" autocomplete="off" type="radio" name="is_public" id="public1" value="1" checked>
                                 <label class="form-check-label" for="public1">
                                     公开（其他用户可以看到您的咨询和回复）
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="is_public" id="public0" value="0">
+                                <input class="form-check-input" autocomplete="off" type="radio" name="is_public" id="public0" value="0">
                                 <label class="form-check-label" for="public0">
                                     私密（仅您自己可见）
                                 </label>

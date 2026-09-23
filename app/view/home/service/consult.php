@@ -20,22 +20,22 @@
                         
                         <div class="mb-3">
                             <label class="form-label">姓名 *</label>
-                            <input type="text" name="name" class="form-control" required>
+                            <input type="text" name="name" autocomplete="off" class="form-control" required>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">联系电话 *</label>
-                            <input type="tel" name="phone" class="form-control" required>
+                            <input type="tel" name="phone" autocomplete="off" class="form-control" required>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">电子邮箱</label>
-                            <input type="email" name="email" class="form-control">
+                            <input type="email" name="email" autocomplete="off" class="form-control">
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">咨询标题 *</label>
-                            <input type="text" name="title" class="form-control" required>
+                            <input type="text" name="title" autocomplete="off" class="form-control" required>
                         </div>
                         
                         <div class="mb-3">

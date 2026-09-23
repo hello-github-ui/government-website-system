@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <form action="/admin/role" method="get" class="row g-3">
                         <div class="col-md-4">
-                            <input type="text" name="keyword" class="form-control" placeholder="角色名称" value="<?= htmlspecialchars($keyword ?? '') ?>">
+                            <input type="text" name="keyword" autocomplete="off" class="form-control" placeholder="角色名称" value="<?= htmlspecialchars($keyword ?? '') ?>">
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-outline-primary">搜索</button>

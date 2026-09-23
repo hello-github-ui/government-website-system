@@ -91,7 +91,7 @@ include APP_PATH . 'view/admin/public/header.php';
                 <form id="uploadForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>选择文件</label>
-                        <input type="file" name="file" class="form-control" required>
+                        <input type="file" name="file" autocomplete="off" class="form-control" required>
                         <small class="form-text text-muted">支持图片、文档等格式，最大10MB</small>
                     </div>
                 </form>
