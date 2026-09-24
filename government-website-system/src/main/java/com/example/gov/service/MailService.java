@@ -3,6 +3,7 @@ package com.example.gov.service;
 import com.example.gov.common.BizException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,12 @@ public class MailService {
 
     private final JavaMailSender mailSender;
 
+    /**
+     * SMTP 认证账号（QQ 邮箱要求发件人地址必须与认证账号一致）。
+     */
+    @Value("${spring.mail.username}")
+    private String mailUsername;
+
     public MailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -40,6 +47,7 @@ public class MailService {
         try {
             MimeMessage msg = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
+            helper.setFrom(mailUsername);
             helper.setTo(to);
             helper.setSubject("政府官网系统 - SMTP 配置测试邮件");
             helper.setText("这是一封来自政府官网系统的测试邮件，说明 SMTP 邮件配置生效。\n\n发送时间: " + LocalDateTime.now(), true);
