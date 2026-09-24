@@ -58,36 +58,17 @@
         </div></div>
 
         <div class="card shadow-sm"><div class="card-body">
-            <h6 class="text-danger"><i class="fas fa-envelope"></i> SMTP 邮件配置（阿里云企业邮箱等）</h6>
-            <form th:action="@{/admin/settings/save}" method="post">
-                <div class="row">
-                    <div class="col-md-6 mb-3"><label class="form-label">SMTP 服务器</label>
-                        <input name="smtp_host" class="form-control" placeholder="smtp.qiye.aliyun.com" th:value="${config['smtp_host']}"></div>
-                    <div class="col-md-3 mb-3"><label class="form-label">端口</label>
-                        <input name="smtp_port" class="form-control" placeholder="465" th:value="${config['smtp_port']} ?: '465'"></div>
-                    <div class="col-md-3 mb-3"><label class="form-label">加密方式</label>
-                        <select name="smtp_secure" class="form-select">
-                            <option value="ssl" th:selected="${config['smtp_secure'] == null || config['smtp_secure'] == 'ssl'}">SSL</option>
-                            <option value="tls" th:selected="${config['smtp_secure'] == 'tls'}">TLS</option>
-                            <option value="none" th:selected="${config['smtp_secure'] == 'none'}">无</option>
-                        </select></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3"><label class="form-label">发件邮箱账号</label>
-                        <input name="smtp_user" class="form-control" placeholder="admin@example.com" th:value="${config['smtp_user']}"></div>
-                    <div class="col-md-6 mb-3"><label class="form-label">SMTP 授权码/密码</label>
-                        <input type="password" name="smtp_pass" class="form-control" placeholder="授权码" th:value="${config['smtp_pass']}"></div>
-                </div>
-                <div class="mb-3"><label class="form-label">发件人显示地址（From）</label>
-                    <input name="smtp_from" class="form-control" placeholder="不填则使用发件邮箱账号" th:value="${config['smtp_from']}"></div>
-                <button class="btn btn-danger">保存 SMTP 配置</button>
-            </form>
-            <form th:action="@{/admin/settings/sendTestMail}" method="post" class="mt-3">
+            <h6 class="text-danger"><i class="fas fa-envelope"></i> 邮件服务（SMTP）</h6>
+            <p class="text-muted small mb-3">
+                邮件发送使用 Spring Boot 原生 JavaMailSender，配置位于 <code>application.yml</code> 的
+                <code>spring.mail.*</code>（当前为 QQ 邮箱：smtp.qq.com:587）。
+            </p>
+            <form th:action="@{/admin/settings/sendTestMail}" method="post" class="mt-2">
                 <div class="input-group">
                     <input name="testEmail" type="email" class="form-control" placeholder="输入接收测试邮件的邮箱" required>
                     <button class="btn btn-outline-primary"><i class="fas fa-paper-plane"></i> 发送测试邮件</button>
                 </div>
-                <div class="form-text">发送测试邮件需要服务器可访问外网 SMTP 端口，请先保存配置再测试。</div>
+                <div class="form-text">发送测试邮件需要服务器可访问外网 SMTP 端口（smtp.qq.com:587）。</div>
             </form>
         </div></div>
     </div>

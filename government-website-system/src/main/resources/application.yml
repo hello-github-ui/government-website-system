@@ -63,6 +63,28 @@ spring:
             max-file-size: 10MB
             max-request-size: 10MB
 
+    # ----------------- 邮件发送（Spring Boot 原生 JavaMailSender） -----------------
+    mail:
+        # SMTP 服务器地址
+        host: smtp.qq.com
+        # SMTP 服务器端口（QQ 邮箱 587 端口走 STARTTLS 加密认证）
+        port: 587
+        # 发件邮箱用户名
+        username: 2653020258@qq.com
+        # 授权码（非登录密码）
+        password: uvpxoquknmvidida
+        # 默认邮件编码
+        default-encoding: UTF-8
+        properties:
+            mail:
+                smtp:
+                    # 587 端口需启用 STARTTLS（QQ 官方要求），认证在 TLS 隧道内进行
+                    starttls:
+                        enable: true
+                    auth: true
+                # 发送调试日志（生产环境建议改为 false）
+                debug: true
+
 # ----------------- MyBatis -----------------
 mybatis:
     mapper-locations: classpath:mapper/*.xml

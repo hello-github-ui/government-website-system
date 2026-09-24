@@ -1,5 +1,6 @@
 package com.example.gov.controller.admin;
 
+import com.example.gov.service.MailService;
 import com.example.gov.service.SettingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,11 @@ import java.util.Map;
 public class AdminSettingsController {
 
     private final SettingService settingService;
+    private final MailService mailService;
 
-    public AdminSettingsController(SettingService settingService) {
+    public AdminSettingsController(SettingService settingService, MailService mailService) {
         this.settingService = settingService;
+        this.mailService = mailService;
     }
 
     @GetMapping({"", "/"})
@@ -35,8 +38,7 @@ public class AdminSettingsController {
         // 仅保存已知设置键，避免写入任意字段
         String[] keys = {"site_title", "site_subtitle", "site_url", "site_logo", "site_favicon",
             "seo_keywords", "seo_description", "icp_number", "police_number", "copyright",
-            "contact_address", "contact_phone", "contact_email", "contact_work_time",
-            "smtp_host", "smtp_port", "smtp_user", "smtp_pass", "smtp_from", "smtp_secure"};
+            "contact_address", "contact_phone", "contact_email", "contact_work_time"};
         for (String k : keys) {
             if (form.containsKey(k)) {
                 settingService.set(k, form.get(k));
@@ -47,13 +49,13 @@ public class AdminSettingsController {
     }
 
     /**
-     * 测试 SMTP 邮件发送（读取已保存的配置，向目标邮箱发送一封测试邮件）。
+     * 测试邮件发送（走 application.yml 的 spring.mail.* 配置，自动装配的 JavaMailSender）。
      */
     @PostMapping("/sendTestMail")
     public String sendTestMail(@RequestParam(required = false) String testEmail,
                                RedirectAttributes ra) {
         try {
-            MailTestService.sendTest(settingService, testEmail);
+            mailService.sendTestMail(testEmail);
             ra.addFlashAttribute("flashMessage", "测试邮件已发送，请查收 " + testEmail);
         } catch (Exception e) {
             ra.addFlashAttribute("flashError", "发送失败: " + e.getMessage());

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,6 +52,12 @@ class GovFeatureRegressionTest {
 
     @Autowired
     private BackupService backupService;
+
+    /**
+     * Mock 邮件发送器：测试环境不真实联网发信，仅验证调用链与页面行为。
+     */
+    @MockBean
+    private JavaMailSender mailSender;
 
     /**
      * 通过真实登录获取后台管理员会话。
@@ -208,34 +216,25 @@ class GovFeatureRegressionTest {
             .anyMatch(f -> f.name().equals(name)));
     }
 
-    // ---------------- SMTP 配置 ----------------
+    // ---------------- 邮件（Spring Boot JavaMailSender） ----------------
 
     @Test
     @Order(9)
-    void smtpSendTest_withoutConfig_returnsErrorNotServerError() throws Exception {
+    void sendTestMail_redirectsToSettings() throws Exception {
         MockHttpSession session = adminSession();
-        // 未配置 SMTP 时发送测试邮件，应重定向回设置页并提示错误，而不是 500
-        mockMvc.perform(post("/admin/settings/sendTestMail").param("testEmail", "a@b.com").session(session))
+        // Mock JavaMailSender 成功发送：应重定向回设置页并提示成功，而不是 500
+        mockMvc.perform(post("/admin/settings/sendTestMail").param("testEmail", "test@example.com").session(session))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/admin/settings"));
     }
 
     @Test
     @Order(10)
-    void smtpSettings_saveAndPage_ok() throws Exception {
+    void settingsPage_showsMailSection() throws Exception {
         MockHttpSession session = adminSession();
-        mockMvc.perform(post("/admin/settings/save")
-                        .param("smtp_host", "smtp.example.com")
-                        .param("smtp_port", "465")
-                        .param("smtp_user", "test@example.com")
-                        .param("smtp_pass", "secret")
-                        .param("smtp_from", "test@example.com")
-                        .param("smtp_secure", "ssl")
-                        .session(session))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/settings"));
         mockMvc.perform(get("/admin/settings").session(session))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("SMTP")));
+                .andExpect(model().attributeExists("config"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("邮件服务")));
     }
 }
