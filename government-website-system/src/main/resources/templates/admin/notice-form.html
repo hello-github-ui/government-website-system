@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='公告编辑')}"></head>
 <body>
@@ -7,9 +7,9 @@
     <div th:insert="~{admin/fragments/layout :: topbar(title='公告编辑')}"></div>
     <div class="admin-content">
         <div class="card shadow-sm"><div class="card-body">
-            <form th:action="${info != null} ? @{/admin/notice/edit/{id}(id=${info.id})} : @{/admin/notice/add}" method="post">
+            <form autocomplete="off" th:action="${info != null} ? @{/admin/notice/edit/{id}(id=${info.id})} : @{/admin/notice/add}" method="post">
                 <div class="mb-3"><label class="form-label">标题 *</label>
-                    <input name="title" class="form-control" th:value="${info?.title}" required></div>
+                    <input autocomplete="off" name="title" class="form-control" th:value="${info?.title}" required></div>
                 <div class="mb-3"><label class="form-label">摘要</label>
                     <textarea name="summary" rows="2" class="form-control" th:text="${info?.summary}"></textarea></div>
                 <div class="mb-3"><label class="form-label">内容</label>

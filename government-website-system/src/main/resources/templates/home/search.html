@@ -5,9 +5,9 @@
 <header th:replace="~{home/fragments/header :: top}"></header>
 <div class="container py-4">
     <h4 class="mb-3">站内搜索</h4>
-    <form th:action="@{/search}" method="get" class="mb-4">
+    <form autocomplete="off" th:action="@{/search}" method="get" class="mb-4">
         <div class="input-group">
-            <input type="text" name="q" class="form-control" th:value="${keyword}" placeholder="输入关键词">
+            <input autocomplete="off" type="text" name="q" class="form-control" th:value="${keyword}" placeholder="输入关键词">
             <select name="type" class="form-select" style="max-width:120px;">
                 <option value="all" th:selected="${type=='all'}">全部</option>
                 <option value="notice" th:selected="${type=='notice'}">公告</option>

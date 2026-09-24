@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='文书编辑')}"></head>
 <body>
@@ -8,21 +8,21 @@
     <div class="admin-content">
         <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
         <div class="card shadow-sm"><div class="card-body">
-            <form th:action="${info != null} ? @{/admin/judicial/edit/{id}(id=${info.id})} : @{/admin/judicial/add}"
+            <form autocomplete="off" th:action="${info != null} ? @{/admin/judicial/edit/{id}(id=${info.id})} : @{/admin/judicial/add}"
                   method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">案号 *</label>
-                        <input name="case_no" class="form-control" th:value="${info?.caseNo}" required></div>
+                        <input autocomplete="off" name="case_no" class="form-control" th:value="${info?.caseNo}" required></div>
                     <div class="col-md-6 mb-3"><label class="form-label">案件类型</label>
-                        <input name="case_type" class="form-control" th:value="${info?.caseType}"></div>
+                        <input autocomplete="off" name="case_type" class="form-control" th:value="${info?.caseType}"></div>
                 </div>
                 <div class="mb-3"><label class="form-label">案件名称 *</label>
-                    <input name="case_name" class="form-control" th:value="${info?.caseName}" required></div>
+                    <input autocomplete="off" name="case_name" class="form-control" th:value="${info?.caseName}" required></div>
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">审理法院 *</label>
-                        <input name="court" class="form-control" th:value="${info?.court}" required></div>
+                        <input autocomplete="off" name="court" class="form-control" th:value="${info?.court}" required></div>
                     <div class="col-md-6 mb-3"><label class="form-label">裁判日期</label>
-                        <input type="date" name="judge_date" class="form-control"
+                        <input autocomplete="off" type="date" name="judge_date" class="form-control"
                                th:value="${info?.judgeDate != null} ? ${#temporals.format(info.judgeDate,'yyyy-MM-dd')} : ''"></div>
                 </div>
                 <div class="mb-3"><label class="form-label">文书内容</label>
@@ -32,7 +32,7 @@
                         当前附件：<a th:href="@{'/uploads/' + ${info.attachment}}" target="_blank" th:text="${info.attachment}"></a>
                         <span class="text-muted">（重新上传将覆盖）</span>
                     </div>
-                    <input type="file" name="attachment" class="form-control"></div>
+                    <input autocomplete="off" type="file" name="attachment" class="form-control"></div>
                 <div class="row">
                     <div class="col-md-4 mb-3"><label class="form-label">审核状态</label>
                         <select name="check_status" class="form-select">

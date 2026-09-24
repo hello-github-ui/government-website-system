@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='用户编辑')}"></head>
 <body>
@@ -7,20 +7,20 @@
     <div th:insert="~{admin/fragments/layout :: topbar(title='用户编辑')}"></div>
     <div class="admin-content">
         <div class="card shadow-sm"><div class="card-body">
-            <form th:action="${info != null} ? @{/admin/user/edit/{id}(id=${info.id})} : @{/admin/user/add}" method="post">
+            <form autocomplete="off" th:action="${info != null} ? @{/admin/user/edit/{id}(id=${info.id})} : @{/admin/user/add}" method="post">
                 <div class="mb-3"><label class="form-label">用户名 *</label>
-                    <input name="username" class="form-control" th:value="${info?.username}"
+                    <input autocomplete="off" name="username" class="form-control" th:value="${info?.username}"
                            th:readonly="${info != null}" required></div>
                 <div class="mb-3"><label class="form-label">真实姓名</label>
-                    <input name="real_name" class="form-control" th:value="${info?.realName}"></div>
+                    <input autocomplete="off" name="real_name" class="form-control" th:value="${info?.realName}"></div>
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">手机号</label>
-                        <input name="phone" class="form-control" th:value="${info?.phone}"></div>
+                        <input autocomplete="off" name="phone" class="form-control" th:value="${info?.phone}"></div>
                     <div class="col-md-6 mb-3"><label class="form-label">邮箱</label>
-                        <input name="email" class="form-control" th:value="${info?.email}"></div>
+                        <input autocomplete="off" name="email" class="form-control" th:value="${info?.email}"></div>
                 </div>
                 <div class="mb-3"><label class="form-label">新密码（留空不修改）</label>
-                    <input type="password" name="password" class="form-control"></div>
+                    <input autocomplete="off" type="password" name="password" class="form-control"></div>
                 <div class="mb-3"><label class="form-label">状态</label>
                     <select name="status" class="form-select">
                         <option value="1" th:selected="${info == null || info.status == 1}">正常</option>

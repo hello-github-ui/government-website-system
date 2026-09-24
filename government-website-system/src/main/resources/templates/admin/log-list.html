@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='操作日志')}"></head>
 <body>
@@ -9,8 +9,8 @@
         <div class="card shadow-sm">
             <div class="card-header bg-white d-flex justify-content-between">
                 <span>日志列表（共 <b th:text="${total}"></b> 条）</span>
-                <form th:action="@{/admin/log/clear}" method="post" onsubmit="return confirm('确认清理？')">
-                    <input type="hidden" name="days" value="30">
+                <form autocomplete="off" th:action="@{/admin/log/clear}" method="post" onsubmit="return confirm('确认清理？')">
+                    <input autocomplete="off" type="hidden" name="days" value="30">
                     <button class="btn btn-outline-danger btn-sm">清空30天前日志</button>
                 </form>
             </div>

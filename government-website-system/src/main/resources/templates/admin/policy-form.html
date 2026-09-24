@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='政策编辑')}"></head>
 <body>
@@ -8,15 +8,15 @@
     <div class="admin-content">
         <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
         <div class="card shadow-sm"><div class="card-body">
-            <form th:action="${info != null} ? @{/admin/policy/edit/{id}(id=${info.id})} : @{/admin/policy/add}"
+            <form autocomplete="off" th:action="${info != null} ? @{/admin/policy/edit/{id}(id=${info.id})} : @{/admin/policy/add}"
                   method="post" enctype="multipart/form-data">
                 <div class="mb-3"><label class="form-label">标题 *</label>
-                    <input name="title" class="form-control" th:value="${info?.title}" required></div>
+                    <input autocomplete="off" name="title" class="form-control" th:value="${info?.title}" required></div>
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">发布机构</label>
-                        <input name="publish_org" class="form-control" th:value="${info?.publishOrg}"></div>
+                        <input autocomplete="off" name="publish_org" class="form-control" th:value="${info?.publishOrg}"></div>
                     <div class="col-md-6 mb-3"><label class="form-label">发布日期</label>
-                        <input type="date" name="publish_date" class="form-control"
+                        <input autocomplete="off" type="date" name="publish_date" class="form-control"
                                th:value="${info?.publishDate != null} ? ${#temporals.format(info.publishDate,'yyyy-MM-dd')} : ''"></div>
                 </div>
                 <div class="mb-3"><label class="form-label">内容</label>
@@ -26,7 +26,7 @@
                         当前附件：<a th:href="@{'/uploads/' + ${info.attachment}}" target="_blank" th:text="${info.attachment}"></a>
                         <span class="text-muted">（重新上传将覆盖）</span>
                     </div>
-                    <input type="file" name="attachment" class="form-control"></div>
+                    <input autocomplete="off" type="file" name="attachment" class="form-control"></div>
                 <div class="mb-3"><label class="form-label">状态</label>
                     <select name="status" class="form-select">
                         <option value="1" th:selected="${info == null || info.status == 1}">已发布</option>

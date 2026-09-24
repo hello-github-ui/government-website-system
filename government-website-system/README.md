@@ -135,14 +135,17 @@ mvn test
 3. **政策法规 / 裁判文书附件**：后台表单支持上传附件，前台详情页展示“附件下载”链接。
 4. **数据备份**：后台一键导出全库 SQL（无需本机 mysqldump），支持下载、删除与上传 SQL 恢复（危险操作，页面二次确认）。
 5. **登录日志**：后台新增登录日志查看页，支持按成功/失败筛选与分页。
-6. **邮件发送（Spring Boot 原生）**：使用 `application.yml` 的 `spring.mail.*` 配置（QQ 邮箱 smtp.qq.com:587 + STARTTLS）
-   与自动装配的 `JavaMailSender`，系统设置页支持向任意邮箱发送测试邮件验证配置。
+6. **邮件发送（Spring Boot 原生 + 富文本）**：使用 `application.yml` 的 `spring.mail.*` 配置（QQ 邮箱 smtp.qq.com:587 + STARTTLS）
+   与自动装配的 `JavaMailSender`；系统设置页支持**富文本编辑邮件主题与内容**（加粗/斜体/标题/列表/链接/图片），
+   保存后向任意邮箱发送 HTML 邮件。
 7. **图片懒加载**：前台注入 IntersectionObserver 懒加载脚本（高斯模糊过渡动画），媒体库缩略图使用原生懒加载。
 8. **日志与可观测性**：Controller / Service 全链路日志（登录、登出、注册、增删改、上传、备份、邮件等），
    登录失败记录原因与 IP；MyBatis SQL 走 logback（`logging.level.com.example.gov.mapper=debug`），
    统一带时间戳与**线程名**（如 `[http-nio-8082-exec-1]`），便于排查多线程并发问题。
 9. **小窗口适配**：后台侧边栏固定视口高度并独立滚动（`height:100vh + overflow-y:auto`），
    窗口较矮时仍可滚动选中底部"其他"区菜单（查看前台 / 退出登录）；窄屏自动收窄侧边栏。
+10. **表单防自动填充**：全部输入框与表单 `autocomplete="off"`（含前台登录/注册、后台登录与各编辑页）。
+11. **前台政务风格**：首页 Hero 区参考政府网站样式（深红横幅 + 徽标 + 今日日期 + 站内搜索框）。
 8. **后台表单参数名统一**：修复模板下划线字段名与控制器 camelCase 参数名不一致导致的
    发布机构、案号、角色名、导航配置等字段保存丢失问题（如 `publish_org`/`case_no`/`role_name`/`nav_name` 等）。
 

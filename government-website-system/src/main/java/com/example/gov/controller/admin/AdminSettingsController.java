@@ -41,7 +41,8 @@ public class AdminSettingsController {
         // 仅保存已知设置键，避免写入任意字段
         String[] keys = {"site_title", "site_subtitle", "site_url", "site_logo", "site_favicon",
             "seo_keywords", "seo_description", "icp_number", "police_number", "copyright",
-            "contact_address", "contact_phone", "contact_email", "contact_work_time"};
+            "contact_address", "contact_phone", "contact_email", "contact_work_time",
+            "mail_subject", "mail_content_html"};
         for (String k : keys) {
             if (form.containsKey(k)) {
                 settingService.set(k, form.get(k));
@@ -52,14 +53,18 @@ public class AdminSettingsController {
     }
 
     /**
-     * 测试邮件发送（走 application.yml 的 spring.mail.* 配置，自动装配的 JavaMailSender）。
+     * 发送邮件（走 application.yml 的 spring.mail.* 配置，自动装配的 JavaMailSender）。
      */
     @PostMapping("/sendTestMail")
     public String sendTestMail(@RequestParam(required = false) String testEmail,
                                RedirectAttributes ra) {
+        String thread = Thread.currentThread().getName();
+        String subject = settingService.get("mail_subject", "政府官网系统邮件");
+        String html = settingService.get("mail_content_html", "");
+        log.info("[{}] 后台发送邮件 to={}, subject={}", thread, testEmail, subject);
         try {
-            mailService.sendTestMail(testEmail);
-            ra.addFlashAttribute("flashMessage", "测试邮件已发送，请查收 " + testEmail);
+            mailService.sendMail(testEmail, subject, html);
+            ra.addFlashAttribute("flashMessage", "邮件已发送，请查收 " + testEmail);
         } catch (Exception e) {
             ra.addFlashAttribute("flashError", "发送失败: " + e.getMessage());
         }

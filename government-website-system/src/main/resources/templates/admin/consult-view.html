@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='处理咨询')}"></head>
 <body>
@@ -13,8 +13,8 @@
         </div></div>
         <div class="card shadow-sm"><div class="card-body">
             <h6>回复</h6>
-            <form th:action="@{/admin/consult/reply}" method="post">
-                <input type="hidden" name="id" th:value="${consult.id}">
+            <form autocomplete="off" th:action="@{/admin/consult/reply}" method="post">
+                <input autocomplete="off" type="hidden" name="id" th:value="${consult.id}">
                 <div class="mb-3">
                     <textarea name="reply" rows="5" class="form-control" th:text="${consult.replyContent}"></textarea>
                 </div>

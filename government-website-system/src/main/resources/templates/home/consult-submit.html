@@ -8,17 +8,17 @@
         <div class="card-body p-4">
             <h4 class="mb-3">提交咨询/投诉</h4>
             <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
-            <form th:action="@{/consult/save}" method="post">
+            <form autocomplete="off" th:action="@{/consult/save}" method="post">
                 <div class="mb-3"><label class="form-label">类型</label>
                     <select name="type" class="form-select">
                         <option value="1">咨询</option><option value="2">投诉</option><option value="3">建议</option>
                     </select></div>
                 <div class="mb-3"><label class="form-label">标题 *</label>
-                    <input name="title" class="form-control" required></div>
+                    <input autocomplete="off" name="title" class="form-control" required></div>
                 <div class="mb-3"><label class="form-label">内容 *</label>
                     <textarea name="content" rows="5" class="form-control" required></textarea></div>
                 <div class="mb-3 form-check">
-                    <input type="checkbox" name="is_public" value="1" checked class="form-check-input" id="pub">
+                    <input autocomplete="off" type="checkbox" name="is_public" value="1" checked class="form-check-input" id="pub">
                     <label class="form-check-label" for="pub">公开回复内容</label>
                 </div>
                 <button class="btn btn-danger">提交</button>

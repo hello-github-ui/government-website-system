@@ -12,7 +12,7 @@
                     <h6 class="mb-1"><i class="fas fa-database"></i> 数据库备份</h6>
                     <p class="text-muted small mb-0">将数据库全量导出为 SQL 文件，备份文件保存在服务器 backup 目录。</p>
                 </div>
-                <form th:action="@{/admin/backup/create}" method="post">
+                <form autocomplete="off" th:action="@{/admin/backup/create}" method="post">
                     <button class="btn btn-danger"><i class="fas fa-plus-circle"></i> 立即备份</button>
                 </form>
             </div>
@@ -25,10 +25,10 @@
                     <i class="fas fa-exclamation-triangle"></i>
                     恢复会<strong>覆盖当前数据库中的表结构与数据</strong>，请务必先创建最新备份，并确认上传的是完整可用的 SQL 文件。
                 </div>
-                <form th:action="@{/admin/backup/restore}" method="post" enctype="multipart/form-data"
+                <form autocomplete="off" th:action="@{/admin/backup/restore}" method="post" enctype="multipart/form-data"
                       onsubmit="return confirm('确定要执行恢复吗？此操作会覆盖现有数据，不可撤销！');">
                     <div class="d-flex">
-                        <input type="file" name="file" class="form-control me-2" accept=".sql" required>
+                        <input autocomplete="off" type="file" name="file" class="form-control me-2" accept=".sql" required>
                         <button class="btn btn-warning">执行恢复</button>
                     </div>
                 </form>
@@ -52,8 +52,8 @@
                         <td th:text="${f.time}"></td>
                         <td class="text-end">
                             <a th:href="@{/admin/backup/download(filename=${f.name})}" class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i> 下载</a>
-                            <form th:action="@{/admin/backup/delete}" method="post" class="d-inline" onsubmit="return confirm('确定删除该备份？')">
-                                <input type="hidden" name="filename" th:value="${f.name}">
+                            <form autocomplete="off" th:action="@{/admin/backup/delete}" method="post" class="d-inline" onsubmit="return confirm('确定删除该备份？')">
+                                <input autocomplete="off" type="hidden" name="filename" th:value="${f.name}">
                                 <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> 删除</button>
                             </form>
                         </td>

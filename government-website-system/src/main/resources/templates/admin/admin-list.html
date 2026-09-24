@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='管理员')}"></head>
 <body>
@@ -28,8 +28,8 @@
                     </td>
                     <td>
                         <a th:href="@{/admin/admin/edit/{id}(id=${a.id})}" class="btn btn-sm btn-outline-primary">编辑</a>
-                        <form th:action="@{/admin/admin/delete}" method="post" style="display:inline" onsubmit="return confirm('确认删除？')">
-                            <input type="hidden" name="id" th:value="${a.id}">
+                        <form autocomplete="off" th:action="@{/admin/admin/delete}" method="post" style="display:inline" onsubmit="return confirm('确认删除？')">
+                            <input autocomplete="off" type="hidden" name="id" th:value="${a.id}">
                             <button class="btn btn-sm btn-outline-danger">删除</button>
                         </form>
                     </td>

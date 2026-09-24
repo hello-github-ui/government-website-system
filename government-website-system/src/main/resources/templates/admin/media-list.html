@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='媒体库')}"></head>
 <body>
@@ -15,8 +15,8 @@
                     <a th:href="@{/admin/media(type='audio')}" class="btn btn-outline-secondary" th:classappend="${type=='audio'} ? 'active'">音频</a>
                     <a th:href="@{/admin/media(type='document')}" class="btn btn-outline-secondary" th:classappend="${type=='document'} ? 'active'">文档</a>
                 </div>
-                <form th:action="@{/admin/media/upload}" method="post" enctype="multipart/form-data" class="d-flex">
-                    <input type="file" name="file" class="form-control form-control-sm me-2" required>
+                <form autocomplete="off" th:action="@{/admin/media/upload}" method="post" enctype="multipart/form-data" class="d-flex">
+                    <input autocomplete="off" type="file" name="file" class="form-control form-control-sm me-2" required>
                     <button class="btn btn-danger btn-sm"><i class="fas fa-upload"></i> 上传文件</button>
                 </form>
             </div>
@@ -45,8 +45,8 @@
                             <div class="card-footer p-2 d-flex gap-1">
                                 <button type="button" class="btn btn-info btn-xs flex-fill"
                                         th:attr="data-url=${f.url}" onclick="copyUrl(this.getAttribute('data-url'))"><i class="fas fa-link"></i> 复制链接</button>
-                                <form th:action="@{/admin/media/delete}" method="post" onsubmit="return confirm('确定删除？')" class="flex-fill">
-                                    <input type="hidden" name="filename" th:value="${f.name}">
+                                <form autocomplete="off" th:action="@{/admin/media/delete}" method="post" onsubmit="return confirm('确定删除？')" class="flex-fill">
+                                    <input autocomplete="off" type="hidden" name="filename" th:value="${f.name}">
                                     <button class="btn btn-danger btn-xs w-100"><i class="fas fa-trash"></i></button>
                                 </form>
                             </div>

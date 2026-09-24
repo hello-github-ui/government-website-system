@@ -5,9 +5,9 @@
 <header th:replace="~{home/fragments/header :: top}"></header>
 <div class="container py-4">
     <h4 class="mb-3"><i class="fas fa-gavel text-danger"></i> 裁判文书检索</h4>
-    <form th:action="@{/judicial}" method="get" class="mb-3">
+    <form autocomplete="off" th:action="@{/judicial}" method="get" class="mb-3">
         <div class="input-group">
-            <input type="text" name="keyword" class="form-control" th:value="${keyword}"
+            <input autocomplete="off" type="text" name="keyword" class="form-control" th:value="${keyword}"
                    placeholder="请输入案件名称、案号或关键词">
             <button class="btn btn-danger">检索</button>
         </div>

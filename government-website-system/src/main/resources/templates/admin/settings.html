@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments/layout :: head(title='系统设置')}"></head>
 <body>
@@ -10,67 +10,108 @@
         <div th:if="${flashMessage != null}" class="alert alert-success" th:text="${flashMessage}"></div>
 
         <div class="card shadow-sm mb-3"><div class="card-body">
-            <form th:action="@{/admin/settings/save}" method="post">
+            <form autocomplete="off" th:action="@{/admin/settings/save}" method="post">
                 <h6 class="text-danger"><i class="fas fa-cog"></i> 基础设置</h6>
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">网站标题</label>
-                        <input name="site_title" class="form-control" th:value="${config['site_title']}"></div>
+                        <input autocomplete="off" name="site_title" class="form-control" th:value="${config['site_title']}"></div>
                     <div class="col-md-6 mb-3"><label class="form-label">网站副标题</label>
-                        <input name="site_subtitle" class="form-control" th:value="${config['site_subtitle']}"></div>
+                        <input autocomplete="off" name="site_subtitle" class="form-control" th:value="${config['site_subtitle']}"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">网站地址</label>
-                        <input name="site_url" class="form-control" th:value="${config['site_url']}"></div>
+                        <input autocomplete="off" name="site_url" class="form-control" th:value="${config['site_url']}"></div>
                     <div class="col-md-6 mb-3"><label class="form-label">网站 Logo</label>
-                        <input name="site_logo" class="form-control" th:value="${config['site_logo']}"></div>
+                        <input autocomplete="off" name="site_logo" class="form-control" th:value="${config['site_logo']}"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">联系电话</label>
-                        <input name="contact_phone" class="form-control" th:value="${config['contact_phone']}"></div>
+                        <input autocomplete="off" name="contact_phone" class="form-control" th:value="${config['contact_phone']}"></div>
                     <div class="col-md-6 mb-3"><label class="form-label">联系邮箱</label>
-                        <input name="contact_email" class="form-control" th:value="${config['contact_email']}"></div>
+                        <input autocomplete="off" name="contact_email" class="form-control" th:value="${config['contact_email']}"></div>
                 </div>
                 <div class="mb-3"><label class="form-label">联系地址</label>
-                    <input name="contact_address" class="form-control" th:value="${config['contact_address']}"></div>
+                    <input autocomplete="off" name="contact_address" class="form-control" th:value="${config['contact_address']}"></div>
                 <div class="mb-3"><label class="form-label">工作时间</label>
-                    <input name="contact_work_time" class="form-control" th:value="${config['contact_work_time']}"></div>
+                    <input autocomplete="off" name="contact_work_time" class="form-control" th:value="${config['contact_work_time']}"></div>
                 <hr>
                 <h6 class="text-danger"><i class="fas fa-search"></i> SEO 设置</h6>
                 <div class="mb-3"><label class="form-label">SEO 关键词</label>
-                    <input name="seo_keywords" class="form-control" th:value="${config['seo_keywords']}"></div>
+                    <input autocomplete="off" name="seo_keywords" class="form-control" th:value="${config['seo_keywords']}"></div>
                 <div class="mb-3"><label class="form-label">SEO 描述</label>
                     <textarea name="seo_description" rows="2" class="form-control" th:text="${config['seo_description']}"></textarea></div>
                 <hr>
                 <h6 class="text-danger"><i class="fas fa-certificate"></i> 备案信息</h6>
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">ICP 备案号</label>
-                        <input name="icp_number" class="form-control" th:value="${config['icp_number']}"></div>
+                        <input autocomplete="off" name="icp_number" class="form-control" th:value="${config['icp_number']}"></div>
                     <div class="col-md-6 mb-3"><label class="form-label">公安备案号</label>
-                        <input name="police_number" class="form-control" th:value="${config['police_number']}"></div>
+                        <input autocomplete="off" name="police_number" class="form-control" th:value="${config['police_number']}"></div>
                 </div>
                 <div class="mb-3"><label class="form-label">版权信息</label>
-                    <input name="copyright" class="form-control" th:value="${config['copyright']}"></div>
+                    <input autocomplete="off" name="copyright" class="form-control" th:value="${config['copyright']}"></div>
                 <button class="btn btn-danger">保存设置</button>
             </form>
-            <form th:action="@{/admin/settings/clearCache}" method="post" class="d-inline">
+            <form autocomplete="off" th:action="@{/admin/settings/clearCache}" method="post" class="d-inline">
                 <button class="btn btn-outline-warning">清除缓存</button>
             </form>
         </div></div>
 
-        <div class="card shadow-sm"><div class="card-body">
+        <div class="card shadow-sm mb-3"><div class="card-body">
             <h6 class="text-danger"><i class="fas fa-envelope"></i> 邮件服务（SMTP）</h6>
             <p class="text-muted small mb-3">
                 邮件发送使用 Spring Boot 原生 JavaMailSender，配置位于 <code>application.yml</code> 的
-                <code>spring.mail.*</code>（当前为 QQ 邮箱：smtp.qq.com:587）。
+                <code>spring.mail.*</code>（当前为 QQ 邮箱：smtp.qq.com:587）。支持富文本（HTML）内容编辑。
             </p>
-            <form th:action="@{/admin/settings/sendTestMail}" method="post" class="mt-2">
-                <div class="input-group">
-                    <input name="testEmail" type="email" class="form-control" placeholder="输入接收测试邮件的邮箱" required>
-                    <button class="btn btn-outline-primary"><i class="fas fa-paper-plane"></i> 发送测试邮件</button>
+            <form autocomplete="off" th:action="@{/admin/settings/save}" method="post" onsubmit="syncMailContent()">
+                <div class="mb-3"><label class="form-label">邮件主题</label>
+                    <input name="mail_subject" class="form-control" autocomplete="off" placeholder="邮件主题，例如：政务服务事项办理通知" th:value="${config['mail_subject']}"></div>
+                <div class="mb-2"><label class="form-label">邮件内容（富文本）</label></div>
+                <!-- 富文本工具栏 -->
+                <div class="btn-group btn-group-sm mb-2" role="group">
+                    <button type="button" class="btn btn-outline-secondary" onclick="document.execCommand('bold')" title="加粗"><b>B</b></button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="document.execCommand('italic')" title="斜体"><i>I</i></button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="document.execCommand('underline')" title="下划线"><u>U</u></button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="document.execCommand('formatBlock', false, 'h3')" title="标题">H</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="document.execCommand('insertUnorderedList')" title="列表">•≡</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="insertMailLink()" title="插入链接">🔗</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="insertMailImage()" title="插入图片">🖼</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="document.execCommand('removeFormat')" title="清除格式">清除格式</button>
                 </div>
-                <div class="form-text">发送测试邮件需要服务器可访问外网 SMTP 端口（smtp.qq.com:587）。</div>
+                <div id="mailEditor" class="form-control border rounded" contenteditable="true"
+                     style="min-height:180px;overflow-y:auto;"
+                     th:utext="${config['mail_content_html']}"></div>
+                <input autocomplete="off" type="hidden" name="mail_content_html" id="mailContent" value="">
+                <div class="form-text mb-2">可编辑加粗、斜体、标题、列表、链接与图片；保存后点击下方“发送”即可送达指定邮箱。</div>
+                <button class="btn btn-danger">保存邮件配置</button>
+            </form>
+            <form autocomplete="off" th:action="@{/admin/settings/sendTestMail}" method="post" class="mt-3">
+                <div class="input-group">
+                    <input name="testEmail" type="email" class="form-control" autocomplete="off" placeholder="输入收件邮箱地址" required>
+                    <button class="btn btn-outline-primary"><i class="fas fa-paper-plane"></i> 发送</button>
+                </div>
+                <div class="form-text">发送使用已保存的邮件主题与富文本内容，需要服务器可访问外网 SMTP 端口（smtp.qq.com:587）。</div>
             </form>
         </div></div>
+
+        <script>
+            /* 富文本编辑器：提交前把可编辑区 HTML 同步到隐藏域 */
+            function syncMailContent() {
+                document.getElementById('mailContent').value = document.getElementById('mailEditor').innerHTML;
+            }
+            function insertMailLink() {
+                var url = prompt('请输入链接地址（http/https）：');
+                if (url) {
+                    document.execCommand('createLink', false, url);
+                }
+            }
+            function insertMailImage() {
+                var url = prompt('请输入图片地址（http/https）：');
+                if (url) {
+                    document.execCommand('insertImage', false, url);
+                }
+            }
+        </script>
     </div>
 </div>
 </body>
