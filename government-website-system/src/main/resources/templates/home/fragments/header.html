@@ -20,8 +20,8 @@
                 <span><i class="fas fa-envelope text-danger"></i>
                     <span th:text="${siteConfig['contact_email']} ?: 'contact@gov.cn'">邮箱</span></span>
             </div>
-            <div>
-                <a th:href="@{/admin}" class="text-muted text-decoration-none"><i class="fas fa-cog"></i> 管理后台</a>
+            <div class="text-muted">
+                <span th:text="${#temporals.format(#temporals.createNow(),'yyyy年MM月dd日 EEEE')}">日期</span>
             </div>
         </div>
     </div>

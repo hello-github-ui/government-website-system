@@ -32,7 +32,11 @@
             <hr class="bg-secondary">
             <div class="d-flex justify-content-between small text-secondary">
                 <span th:text="${siteConfig['copyright']} ?: ''">© 2026 版权所有</span>
-                <span th:text="${siteConfig['icp_number']} ?: ''"></span>
+                <span class="d-flex align-items-center gap-3">
+                    <span th:text="${siteConfig['icp_number']} ?: ''"></span>
+                    <a th:href="@{/admin}" class="text-secondary text-decoration-none">
+                        <i class="fas fa-cog"></i> 管理后台</a>
+                </span>
             </div>
         </div>
     </footer>
