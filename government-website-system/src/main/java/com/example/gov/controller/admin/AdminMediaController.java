@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/admin/media")
+@Slf4j
 public class AdminMediaController {
 
     @Value("${gov.upload-path:./uploads/}")
@@ -137,6 +139,7 @@ public class AdminMediaController {
      */
     @PostMapping("/delete")
     public String delete(@RequestParam String filename, RedirectAttributes ra) {
+        log.info("[{}] AdminMediaController.delete 调用, 参数: filename={}", Thread.currentThread().getName(), filename);
         // 防止路径穿越
         String safe = Paths.get(filename).getFileName().toString();
         File f = new File(uploadPath, safe);

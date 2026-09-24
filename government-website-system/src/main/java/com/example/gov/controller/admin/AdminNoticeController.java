@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 后台公告管理控制器。
  */
 @Controller
 @RequestMapping("/admin/notice")
+@Slf4j
 public class AdminNoticeController {
 
     private final NoticeService noticeService;
@@ -31,7 +33,8 @@ public class AdminNoticeController {
     }
 
     @GetMapping("/add")
-    public String addPage() {
+    public String addPage() {
+        log.info("[{}] AdminNoticeController.addPage 调用", Thread.currentThread().getName());
         return "admin/notice-form";
     }
 
@@ -83,7 +86,8 @@ public class AdminNoticeController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminNoticeController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         noticeService.delete(id);
         ra.addFlashAttribute("flashMessage", "删除成功");
         return "redirect:/admin/notice";

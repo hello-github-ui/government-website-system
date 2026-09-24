@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 前台用户中心控制器。
  */
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class HomeUserController {
 
     private final UserService userService;

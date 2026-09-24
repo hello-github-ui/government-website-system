@@ -28,18 +28,21 @@ public class HomeLoginController {
     }
 
     /**
-     * 登录页。
+     * 前台登录页。
      */
     @GetMapping("/login")
     public String loginPage(HttpSession session, Model model) {
         if (session.getAttribute(SessionKeys.USER_ID) != null) {
+            log.info("[{}] 前台已登录用户重复访问登录页, 跳转个人中心",
+                Thread.currentThread().getName());
             return "redirect:/user/profile";
         }
+        log.debug("[{}] 打开前台登录页", Thread.currentThread().getName());
         return "home/login";
     }
 
     /**
-     * 登录提交。
+     * 前台登录提交。
      */
     @PostMapping("/login/doLogin")
     public String doLogin(@RequestParam String username,
@@ -47,33 +50,39 @@ public class HomeLoginController {
                           HttpServletRequest request,
                           HttpSession session,
                           RedirectAttributes ra) {
+        String thread = Thread.currentThread().getName();
+        String ip = getClientIp(request);
+        log.info("[{}] 前台登录提交 username={}, ip={}", thread, username, ip);
         try {
-            User user = userService.login(username, password, getClientIp(request));
+            User user = userService.login(username, password, ip);
             session.setAttribute(SessionKeys.USER_ID, user.getId());
             session.setAttribute(SessionKeys.USER_NAME, user.getUsername());
             ra.addFlashAttribute("flashMessage", "登录成功");
+            log.info("[{}] 前台登录成功写入会话 userId={}, username={}", thread, user.getId(), username);
             return "redirect:/user/profile";
         } catch (BizException e) {
             ra.addFlashAttribute("flashError", e.getMessage());
+            log.warn("[{}] 前台登录被拒绝 username={}, 原因={}", thread, username, e.getMessage());
             return "redirect:/login";
         }
     }
 
     /**
-     * 注册页。
+     * 前台注册页。
      */
     @GetMapping("/register")
     public String registerPage(HttpSession session) {
         if (session.getAttribute(SessionKeys.USER_ID) != null) {
-            log.info("前台用户已登录,准备跳转到个人中心页面...");
+            log.info("[{}] 前台用户已登录, 注册页跳转到个人中心",
+                Thread.currentThread().getName());
             return "redirect:/user/profile";
         }
-        log.info("准备进入前台用户注册页面...");
+        log.debug("[{}] 打开前台注册页", Thread.currentThread().getName());
         return "home/register";
     }
 
     /**
-     * 注册提交。
+     * 前台注册提交。
      */
     @PostMapping("/register/doRegister")
     public String doRegister(@RequestParam String username,
@@ -83,22 +92,29 @@ public class HomeLoginController {
                              @RequestParam(required = false) String phone,
                              @RequestParam(required = false) String email,
                              RedirectAttributes ra) {
+        String thread = Thread.currentThread().getName();
+        log.info("[{}] 前台注册提交 username={}", thread, username);
         try {
-            log.info("前台用户-注册行为中...");
             userService.register(username, password, confirmPassword, realName, phone, email);
             ra.addFlashAttribute("flashMessage", "注册成功，请登录");
+            log.info("[{}] 前台注册成功 username={}", thread, username);
             return "redirect:/login";
         } catch (BizException e) {
             ra.addFlashAttribute("flashError", e.getMessage());
+            log.warn("[{}] 前台注册被拒绝 username={}, 原因={}", thread, username, e.getMessage());
             return "redirect:/register";
         }
     }
 
     /**
-     * 前台退出。
+     * 前台退出登录。
      */
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletRequest request) {
+        Object userId = session.getAttribute(SessionKeys.USER_ID);
+        Object userName = session.getAttribute(SessionKeys.USER_NAME);
+        log.info("[{}] 前台退出 userId={}, username={}, ip={}",
+            Thread.currentThread().getName(), userId, userName, getClientIp(request));
         session.removeAttribute(SessionKeys.USER_ID);
         session.removeAttribute(SessionKeys.USER_NAME);
         return "redirect:/";

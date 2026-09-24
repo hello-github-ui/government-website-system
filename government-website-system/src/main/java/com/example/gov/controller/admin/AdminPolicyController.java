@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
  */
 @Controller
 @RequestMapping("/admin/policy")
+@Slf4j
 public class AdminPolicyController {
 
     private final PolicyService policyService;
@@ -40,6 +42,7 @@ public class AdminPolicyController {
 
     @GetMapping("/add")
     public String addPage() {
+        log.info("[{}] AdminPolicyController.addPage 调用", Thread.currentThread().getName());
         return "admin/policy-form";
     }
 
@@ -108,6 +111,7 @@ public class AdminPolicyController {
 
     @PostMapping("/delete")
     public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminPolicyController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         policyService.delete(id);
         ra.addFlashAttribute("flashMessage", "删除成功");
         return "redirect:/admin/policy";

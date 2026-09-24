@@ -5,11 +5,13 @@ import com.example.gov.service.PolicyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 前台首页控制器。
  */
 @Controller
+@Slf4j
 public class HomeIndexController {
 
     private final NoticeService noticeService;

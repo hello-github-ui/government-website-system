@@ -7,11 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 前台公告控制器。
  */
 @Controller
+@Slf4j
 public class HomeNoticeController {
 
     private final NoticeService noticeService;

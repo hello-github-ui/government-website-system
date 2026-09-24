@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 全站搜索控制器。
  */
 @Controller
+@Slf4j
 public class HomeSearchController {
 
     private final NoticeService noticeService;

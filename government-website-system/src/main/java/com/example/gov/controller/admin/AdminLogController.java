@@ -5,12 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 后台操作日志控制器。
  */
 @Controller
 @RequestMapping("/admin/log")
+@Slf4j
 public class AdminLogController {
 
     private final LogService logService;
@@ -36,7 +38,8 @@ public class AdminLogController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminLogController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         logService.delete(id);
         ra.addFlashAttribute("flashMessage", "删除成功");
         return "redirect:/admin/log";

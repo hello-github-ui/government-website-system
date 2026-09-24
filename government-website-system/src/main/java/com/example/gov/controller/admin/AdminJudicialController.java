@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
  */
 @Controller
 @RequestMapping("/admin/judicial")
+@Slf4j
 public class AdminJudicialController {
 
     private final JudicialService judicialService;
@@ -40,6 +42,7 @@ public class AdminJudicialController {
 
     @GetMapping("/add")
     public String addPage() {
+        log.info("[{}] AdminJudicialController.addPage 调用", Thread.currentThread().getName());
         return "admin/judicial-form";
     }
 
@@ -126,6 +129,7 @@ public class AdminJudicialController {
 
     @PostMapping("/delete")
     public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminJudicialController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         judicialService.delete(id);
         ra.addFlashAttribute("flashMessage", "删除成功");
         return "redirect:/admin/judicial";

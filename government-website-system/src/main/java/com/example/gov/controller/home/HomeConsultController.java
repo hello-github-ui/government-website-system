@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 前台咨询投诉控制器。
  */
 @Controller
+@Slf4j
 public class HomeConsultController {
 
     private final ConsultService consultService;
@@ -42,7 +44,8 @@ public class HomeConsultController {
      * 提交咨询页（需登录）。
      */
     @GetMapping("/consult/submit")
-    public String submitPage(HttpSession session) {
+    public String submitPage(HttpSession session) {
+        log.info("[{}] HomeConsultController.submitPage 调用", Thread.currentThread().getName());
         if (session.getAttribute(SessionKeys.USER_ID) == null) {
             return "redirect:/login";
         }

@@ -4,6 +4,7 @@ import com.example.gov.common.SessionKeys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -14,12 +15,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * 未登录（无论是否已登录前台）一律重定向到 /admin/login，
  * 由登录页提示“请使用管理员账号登录”，避免出现 403 错误页。</p>
  */
+@Slf4j
 @Component
 public class AdminAuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
+        String thread = Thread.currentThread().getName();
         // 白名单：登录页、登录处理、静态资源
         if (uri.equals("/admin/login") || uri.equals("/admin/login/doLogin")
             || uri.equals("/admin/captcha") || uri.startsWith("/admin/assets")
@@ -33,9 +36,13 @@ public class AdminAuthInterceptor implements HandlerInterceptor {
         Object admin = session.getAttribute(SessionKeys.ADMIN);
         if (adminId == null || admin == null) {
             // 前台用户访问后台同样跳转登录页（保留前台会话），登录页会给出提示
+            log.info("[{}] 拦截后台访问(未登录后台) uri={}, 前台USER_ID={}, ip={}",
+                thread, uri, session.getAttribute(SessionKeys.USER_ID) != null ? "存在" : "无",
+                request.getRemoteAddr());
             response.sendRedirect("/admin/login");
             return false;
         }
+        log.debug("[{}] 放行后台访问 uri={}, adminId={}", thread, uri, adminId);
         return true;
     }
 }

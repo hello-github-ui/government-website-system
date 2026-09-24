@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/role")
+@Slf4j
 public class AdminRoleController {
 
     private final AdminRoleMapper roleMapper;
@@ -36,7 +38,8 @@ public class AdminRoleController {
     }
 
     @GetMapping("/add")
-    public String addPage(Model model) {
+    public String addPage(Model model) {
+        log.info("[{}] AdminRoleController.addPage 调用", Thread.currentThread().getName());
         model.addAttribute("permissions", permissionTree());
         model.addAttribute("rolePermissions", List.of());
         return "admin/role-form";
@@ -94,7 +97,8 @@ public class AdminRoleController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminRoleController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         if (roleMapper.countAdminsByRole(id) > 0) {
             ra.addFlashAttribute("flashError", "该角色下有管理员，无法删除");
             return "redirect:/admin/role";

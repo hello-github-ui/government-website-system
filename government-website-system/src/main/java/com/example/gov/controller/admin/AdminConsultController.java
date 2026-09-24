@@ -10,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 后台咨询投诉管理控制器。
  */
 @Controller
 @RequestMapping("/admin/consult")
+@Slf4j
 public class AdminConsultController {
 
     private final ConsultService consultService;
@@ -54,7 +56,8 @@ public class AdminConsultController {
     public String reply(@RequestParam Long id,
                         @RequestParam String reply,
                         HttpSession session,
-                        RedirectAttributes ra) {
+                        RedirectAttributes ra) {
+        log.info("[{}] AdminConsultController.reply 调用, 参数: id={}, reply={}", Thread.currentThread().getName(), id, reply);
         Admin admin = (Admin) session.getAttribute(SessionKeys.ADMIN);
         Long adminId = admin == null ? 0L : admin.getId();
         consultService.reply(id, reply, adminId);
@@ -65,7 +68,8 @@ public class AdminConsultController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminConsultController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         consultService.delete(id);
         ra.addFlashAttribute("flashMessage", "删除成功");
         return "redirect:/admin/consult";

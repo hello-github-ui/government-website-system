@@ -1,6 +1,7 @@
 package com.example.gov.service;
 
 import com.example.gov.common.BizException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ import java.util.UUID;
  *
  * <p>文件按“日期_UUID.扩展名”重命名保存，避免重名冲突与路径注入。</p>
  */
+@Slf4j
 @Service
 public class FileStorageService {
 
@@ -39,15 +41,20 @@ public class FileStorageService {
      * @param maxMb  允许的最大体积（MB）
      */
     public String store(MultipartFile file, int maxMb) throws IOException {
+        String thread = Thread.currentThread().getName();
         if (file == null || file.isEmpty()) {
+            log.warn("[{}] 文件上传失败(文件为空)", thread);
             throw new BizException("请选择文件");
         }
         if (file.getSize() > maxMb * 1024L * 1024L) {
+            log.warn("[{}] 文件上传失败(超过大小限制) size={}B, 限制={}MB",
+                thread, file.getSize(), maxMb);
             throw new BizException("文件大小不能超过 " + maxMb + "MB");
         }
         String original = file.getOriginalFilename() == null ? "" : file.getOriginalFilename();
         String ext = extOf(original);
         if (!ALLOWED_EXT.contains(ext)) {
+            log.warn("[{}] 文件上传失败(类型不允许) ext={}, original={}", thread, ext, original);
             throw new BizException("不支持的文件类型: " + ext);
         }
         String name = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
@@ -55,6 +62,8 @@ public class FileStorageService {
         Path dirPath = Paths.get(uploadPath);
         Files.createDirectories(dirPath);
         Files.copy(file.getInputStream(), dirPath.resolve(name));
+        log.info("[{}] 文件上传成功 name={}, original={}, size={}B",
+            thread, name, original, file.getSize());
         return name;
     }
 

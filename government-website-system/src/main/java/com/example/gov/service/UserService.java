@@ -37,18 +37,20 @@ public class UserService {
      * 前台登录校验，成功返回用户，失败抛异常。
      */
     public User login(String username, String password, String ip) {
+        String thread = Thread.currentThread().getName();
+        log.info("[{}] 前台登录请求 username={}, ip={}", thread, username, ip);
         User user = userMapper.findByUsername(username);
         if (user == null) {
-            log.error("用户名或密码错误");
+            log.warn("[{}] 前台登录失败(用户不存在) username={}, ip={}", thread, username, ip);
             throw new BizException("用户名或密码错误");
         }
         if (user.getStatus() != null && user.getStatus() != 1) {
-            log.error("账号: {} 已被禁用", user.getUsername());
+            log.warn("[{}] 前台登录失败(账号禁用) username={}, ip={}", thread, username, ip);
             throw new BizException("账号已被禁用");
         }
         if (user.getLockTime() != null && user.getLockTime().isAfter(LocalDateTime.now())) {
             long remain = java.time.Duration.between(LocalDateTime.now(), user.getLockTime()).toMinutes() + 1;
-            log.error("账号: {} 已锁定，请 {} 分钟后重试", user.getUsername(), remain);
+            log.warn("[{}] 前台登录失败(账号锁定) username={}, 剩余{}分钟, ip={}", thread, username, remain, ip);
             throw new BizException("账号已锁定，请" + remain + "分钟后重试");
         }
         if (!passwordEncoder.matches(password, user.getPassword())) {
@@ -60,14 +62,15 @@ public class UserService {
             }
             userMapper.updateFailCount(user.getId(), fail, lockTime);
             int remainChance = 5 - fail;
+            log.warn("[{}] 前台登录失败(密码错误) username={}, 第{}次, 剩余{}次, ip={}",
+                thread, username, fail, Math.max(remainChance, 0), ip);
             if (remainChance <= 0) {
-                log.error("密码错误次数过多，账号已锁定30分钟");
                 throw new BizException("密码错误次数过多，账号已锁定30分钟");
             }
-            log.error("密码错误，还剩 {} 次机会", remainChance);
             throw new BizException("密码错误，还剩" + remainChance + "次机会");
         }
         userMapper.updateLoginInfo(user.getId(), ip);
+        log.info("[{}] 前台登录成功 userId={}, username={}, ip={}", thread, user.getId(), username, ip);
         return user;
     }
 
@@ -76,32 +79,33 @@ public class UserService {
      */
     public void register(String username, String password, String confirmPassword,
                          String realName, String phone, String email) {
+        String thread = Thread.currentThread().getName();
         if (username == null || username.isBlank() || password == null || password.isBlank()) {
-            log.error("用户名和密码不能为空");
+            log.warn("[{}] 注册失败(用户名/密码为空) username={}", thread, username);
             throw new BizException("用户名和密码不能为空");
         }
         if (username.length() < 3 || username.length() > 20) {
-            log.warn("用户名长度为3-20个字符");
+            log.warn("[{}] 注册失败(用户名长度) username={}", thread, username);
             throw new BizException("用户名长度为3-20个字符");
         }
         if (!password.equals(confirmPassword)) {
-            log.warn("两次输入的密码不一致");
+            log.warn("[{}] 注册失败(两次密码不一致) username={}", thread, username);
             throw new BizException("两次输入的密码不一致");
         }
         if (password.length() < 6) {
-            log.warn("密码长度至少6位");
+            log.warn("[{}] 注册失败(密码过短) username={}", thread, username);
             throw new BizException("密码长度至少6位");
         }
         if (email != null && !email.isBlank() && !email.matches("^[\\w.+-]+@[\\w-]+\\.[\\w.-]+$")) {
-            log.warn("邮箱格式不正确");
+            log.warn("[{}] 注册失败(邮箱格式) username={}", thread, username);
             throw new BizException("邮箱格式不正确");
         }
         if (userMapper.findByUsername(username) != null) {
-            log.warn("用户名已存在");
+            log.warn("[{}] 注册失败(用户名已存在) username={}", thread, username);
             throw new BizException("用户名已存在");
         }
         if (email != null && !email.isBlank() && userMapper.findByEmail(email) != null) {
-            log.warn("邮箱已被注册");
+            log.warn("[{}] 注册失败(邮箱已注册) username={}", thread, username);
             throw new BizException("邮箱已被注册");
         }
         User u = new User();
@@ -112,27 +116,35 @@ public class UserService {
         u.setEmail(email);
         u.setStatus(1);
         userMapper.insert(u);
+        log.info("[{}] 前台注册成功 userId={}, username={}, phone={}, email={}",
+            thread, u.getId(), username, phone, email);
     }
 
     /**
      * 修改密码。
      */
     public void changePassword(Long userId, String oldPwd, String newPwd, String confirmPwd) {
+        String thread = Thread.currentThread().getName();
         if (oldPwd == null || newPwd == null || confirmPwd == null
             || oldPwd.isBlank() || newPwd.isBlank()) {
+            log.warn("[{}] 修改密码失败(字段为空) userId={}", thread, userId);
             throw new BizException("请填写所有密码字段");
         }
         if (!newPwd.equals(confirmPwd)) {
+            log.warn("[{}] 修改密码失败(两次新密码不一致) userId={}", thread, userId);
             throw new BizException("两次输入的新密码不一致");
         }
         if (newPwd.length() < 6) {
+            log.warn("[{}] 修改密码失败(新密码过短) userId={}", thread, userId);
             throw new BizException("新密码长度至少6位");
         }
         User user = userMapper.findById(userId);
         if (user == null || !passwordEncoder.matches(oldPwd, user.getPassword())) {
+            log.warn("[{}] 修改密码失败(原密码错误) userId={}", thread, userId);
             throw new BizException("原密码错误");
         }
         userMapper.updatePassword(userId, passwordEncoder.encode(newPwd));
+        log.info("[{}] 修改密码成功 userId={}", thread, userId);
     }
 
     public org.springframework.data.domain.Page<User> page(int page, int size) {

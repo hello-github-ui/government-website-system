@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 后台前台用户管理控制器。
  */
 @Controller
 @RequestMapping("/admin/user")
+@Slf4j
 public class AdminUserController {
 
     private final UserService userService;
@@ -31,7 +33,8 @@ public class AdminUserController {
     }
 
     @GetMapping("/add")
-    public String addPage() {
+    public String addPage() {
+        log.info("[{}] AdminUserController.addPage 调用", Thread.currentThread().getName());
         return "admin/user-form";
     }
 
@@ -82,7 +85,8 @@ public class AdminUserController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminUserController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         userService.delete(id);
         ra.addFlashAttribute("flashMessage", "删除成功");
         return "redirect:/admin/user";

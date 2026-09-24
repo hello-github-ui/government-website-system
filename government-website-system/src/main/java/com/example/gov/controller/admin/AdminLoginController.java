@@ -6,6 +6,7 @@ import com.example.gov.entity.Admin;
 import com.example.gov.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import java.util.Random;
 /**
  * 后台登录控制器。
  */
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminLoginController {
@@ -42,6 +44,10 @@ public class AdminLoginController {
      */
     @GetMapping("/login")
     public String loginPage(HttpSession session, org.springframework.ui.Model model) {
+        log.info("[{}] 访问后台登录页, session已有ADMIN_ID={}, 已有前台USER_ID={}",
+            Thread.currentThread().getName(),
+            session.getAttribute(SessionKeys.ADMIN_ID) != null,
+            session.getAttribute(SessionKeys.USER_ID) != null);
         if (session.getAttribute(SessionKeys.ADMIN_ID) != null) {
             return "redirect:/admin";
         }
@@ -63,15 +69,20 @@ public class AdminLoginController {
                           HttpServletRequest request,
                           HttpSession session,
                           RedirectAttributes ra) {
+        String thread = Thread.currentThread().getName();
+        String ip = getClientIp(request);
+        log.info("[{}] 后台登录提交 username={}, ip={}", thread, username, ip);
         try {
-            Admin admin = adminService.login(username, password, getClientIp(request),
+            Admin admin = adminService.login(username, password, ip,
                 request.getHeader("User-Agent"));
             session.setAttribute(SessionKeys.ADMIN_ID, admin.getId());
             session.setAttribute(SessionKeys.ADMIN, admin);
             ra.addFlashAttribute("flashMessage", "登录成功");
+            log.info("[{}] 后台登录成功写入会话 adminId={}, username={}", thread, admin.getId(), username);
             return "redirect:/admin";
         } catch (BizException e) {
             ra.addFlashAttribute("flashError", e.getMessage());
+            log.warn("[{}] 后台登录被拒绝 username={}, 原因={}", thread, username, e.getMessage());
             return "redirect:/admin/login";
         }
     }
@@ -80,7 +91,12 @@ public class AdminLoginController {
      * 后台退出。
      */
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletRequest request) {
+        Object adminId = session.getAttribute(SessionKeys.ADMIN_ID);
+        String username = session.getAttribute(SessionKeys.ADMIN) == null
+            ? null : ((Admin) session.getAttribute(SessionKeys.ADMIN)).getUsername();
+        log.info("[{}] 后台退出 adminId={}, username={}, ip={}",
+            Thread.currentThread().getName(), adminId, username, getClientIp(request));
         session.removeAttribute(SessionKeys.ADMIN_ID);
         session.removeAttribute(SessionKeys.ADMIN);
         return "redirect:/admin/login";
@@ -98,6 +114,8 @@ public class AdminLoginController {
             code.append(chars.charAt(rnd.nextInt(chars.length())));
         }
         request.getSession().setAttribute("captcha", code.toString());
+        log.info("[{}] 生成后台图形验证码 code={}, ip={}",
+            Thread.currentThread().getName(), code, getClientIp(request));
 
         int w = 120, h = 40;
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);

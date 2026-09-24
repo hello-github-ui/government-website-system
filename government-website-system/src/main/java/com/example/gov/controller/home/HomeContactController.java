@@ -3,11 +3,13 @@ package com.example.gov.controller.home;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 联系我们控制器。
  */
 @Controller
+@Slf4j
 public class HomeContactController {
 
     @GetMapping("/contact")

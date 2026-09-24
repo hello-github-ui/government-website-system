@@ -2,6 +2,7 @@ package com.example.gov.service;
 
 import com.example.gov.common.BizException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * spring.mail.*，支持 QQ 邮箱 / 阿里云企业邮箱等 SMTP）。当前用于后台“发送测试邮件”，
  * 后续可扩展为注册通知、咨询回复通知等。</p>
  */
+@Slf4j
 @Service
 public class MailService {
 
@@ -30,7 +32,9 @@ public class MailService {
      * @param to 接收测试邮件的邮箱地址
      */
     public void sendTestMail(String to) {
+        String thread = Thread.currentThread().getName();
         if (to == null || to.isBlank()) {
+            log.warn("[{}] 测试邮件发送失败(收件人为空)", thread);
             throw new BizException("请填写接收测试邮件的邮箱地址");
         }
         try {
@@ -40,7 +44,9 @@ public class MailService {
             helper.setSubject("政府官网系统 - SMTP 配置测试邮件");
             helper.setText("这是一封来自政府官网系统的测试邮件，说明 SMTP 邮件配置生效。\n\n发送时间: " + LocalDateTime.now(), true);
             mailSender.send(msg);
+            log.info("[{}] 测试邮件发送成功 to={}", thread, to);
         } catch (Exception e) {
+            log.warn("[{}] 测试邮件发送失败 to={}, 原因={}", thread, to, e.getMessage());
             throw new BizException("邮件发送失败: " + e.getMessage());
         }
     }

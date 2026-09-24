@@ -10,14 +10,28 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background:#f1f3f5; }
-        .admin-sidebar { width:230px; background:#212529; min-height:100vh; position:fixed; top:0; left:0; overflow-y:auto; }
+        /* 侧边栏：固定高度100vh + 内部滚动，保证窗口较小时底部菜单（查看前台/退出登录）仍可选中 */
+        .admin-sidebar { width:230px; background:#212529; height:100vh; position:fixed; top:0; left:0; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#6c757d #212529; }
+        .admin-sidebar::-webkit-scrollbar { width:6px; }
+        .admin-sidebar::-webkit-scrollbar-thumb { background:#6c757d; border-radius:3px; }
+        .admin-sidebar::-webkit-scrollbar-track { background:#212529; }
         .admin-sidebar .brand { color:#fff; padding:16px 20px; font-weight:700; border-bottom:1px solid #343a40; }
         .admin-sidebar a { color:#adb5bd; display:block; padding:10px 20px; text-decoration:none; font-size:14px; }
         .admin-sidebar a:hover { color:#fff; background:#b91c1c; }
         .admin-sidebar .section { color:#6c757d; font-size:12px; padding:12px 20px 4px; }
-        .admin-main { margin-left:230px; }
+        .admin-main { margin-left:230px; min-height:100vh; }
         .admin-topbar { background:#fff; padding:10px 20px; box-shadow:0 1px 3px rgba(0,0,0,.08); }
         .admin-content { padding:20px; }
+        /* 小屏适配：侧边栏收窄，内容区随动 */
+        @media (max-width: 991.98px) {
+            .admin-sidebar { width:200px; }
+            .admin-main { margin-left:200px; }
+            .admin-content { padding:12px; }
+        }
+        @media (max-width: 575.98px) {
+            .admin-sidebar { width:100%; height:auto; max-height:40vh; position:relative; }
+            .admin-main { margin-left:0; }
+        }
     </style>
 </th:block>
 </head>

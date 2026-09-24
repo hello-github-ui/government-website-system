@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/nav")
+@Slf4j
 public class AdminNavController {
 
     private final NavMapper navMapper;
@@ -31,7 +33,8 @@ public class AdminNavController {
     }
 
     @GetMapping("/add")
-    public String addPage(Model model) {
+    public String addPage(Model model) {
+        log.info("[{}] AdminNavController.addPage 调用", Thread.currentThread().getName());
         model.addAttribute("parentNavs", navMapper.selectByParent(0L));
         return "admin/nav-form";
     }
@@ -93,7 +96,8 @@ public class AdminNavController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminNavController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         if (navMapper.countChildren(id) > 0) {
             ra.addFlashAttribute("flashError", "请先删除子导航");
             return "redirect:/admin/nav";

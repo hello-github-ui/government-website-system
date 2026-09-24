@@ -4,6 +4,7 @@ import com.example.gov.common.PageResult;
 import com.example.gov.entity.OperationLog;
 import com.example.gov.mapper.OperationLogMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * 操作日志服务。
  */
+@Slf4j
 @Service
 public class LogService {
 
@@ -38,7 +40,8 @@ public class LogService {
         }
         try {
             operationLogMapper.insert(log);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(LogService.class).warn("[{}] 操作日志写入失败 module={}, action={}, 原因={}", Thread.currentThread().getName(), module, action, e.getMessage());
         }
     }
 

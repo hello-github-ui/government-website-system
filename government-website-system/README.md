@@ -138,6 +138,11 @@ mvn test
 6. **邮件发送（Spring Boot 原生）**：使用 `application.yml` 的 `spring.mail.*` 配置（QQ 邮箱 smtp.qq.com:587 + STARTTLS）
    与自动装配的 `JavaMailSender`，系统设置页支持向任意邮箱发送测试邮件验证配置。
 7. **图片懒加载**：前台注入 IntersectionObserver 懒加载脚本（高斯模糊过渡动画），媒体库缩略图使用原生懒加载。
+8. **日志与可观测性**：Controller / Service 全链路日志（登录、登出、注册、增删改、上传、备份、邮件等），
+   登录失败记录原因与 IP；MyBatis SQL 走 logback（`logging.level.com.example.gov.mapper=debug`），
+   统一带时间戳与**线程名**（如 `[http-nio-8082-exec-1]`），便于排查多线程并发问题。
+9. **小窗口适配**：后台侧边栏固定视口高度并独立滚动（`height:100vh + overflow-y:auto`），
+   窗口较矮时仍可滚动选中底部"其他"区菜单（查看前台 / 退出登录）；窄屏自动收窄侧边栏。
 8. **后台表单参数名统一**：修复模板下划线字段名与控制器 camelCase 参数名不一致导致的
    发布机构、案号、角色名、导航配置等字段保存丢失问题（如 `publish_org`/`case_no`/`role_name`/`nav_name` 等）。
 

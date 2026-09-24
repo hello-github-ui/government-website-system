@@ -79,10 +79,10 @@ public class BackupService {
             sb.append("SET FOREIGN_KEY_CHECKS = 1;\n");
 
             Files.writeString(out, sb.toString(), StandardCharsets.UTF_8);
-            log.info("数据库备份完成: {}", filename);
+            log.info("[{}] 数据库备份完成: {} (共{}张表)", Thread.currentThread().getName(), filename, tables.size());
             return filename;
         } catch (Exception e) {
-            log.error("数据库备份失败", e);
+            log.error("[{}] 数据库备份失败", Thread.currentThread().getName(), e);
             throw new BizException("数据库备份失败: " + e.getMessage());
         }
     }

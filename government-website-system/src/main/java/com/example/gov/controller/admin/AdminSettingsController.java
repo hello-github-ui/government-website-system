@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/admin/settings")
+@Slf4j
 public class AdminSettingsController {
 
     private final SettingService settingService;
@@ -34,7 +36,8 @@ public class AdminSettingsController {
     }
 
     @PostMapping("/save")
-    public String save(@RequestParam Map<String, String> form, RedirectAttributes ra) {
+    public String save(@RequestParam Map<String, String> form, RedirectAttributes ra) {
+        log.info("[{}] AdminSettingsController.save 调用", Thread.currentThread().getName());
         // 仅保存已知设置键，避免写入任意字段
         String[] keys = {"site_title", "site_subtitle", "site_url", "site_logo", "site_favicon",
             "seo_keywords", "seo_description", "icp_number", "police_number", "copyright",
@@ -64,7 +67,8 @@ public class AdminSettingsController {
     }
 
     @PostMapping("/clearCache")
-    public String clearCache(RedirectAttributes ra) {
+    public String clearCache(RedirectAttributes ra) {
+        log.info("[{}] AdminSettingsController.clearCache 调用", Thread.currentThread().getName());
         settingService.clearCache();
         ra.addFlashAttribute("flashMessage", "缓存清除成功");
         return "redirect:/admin/settings";

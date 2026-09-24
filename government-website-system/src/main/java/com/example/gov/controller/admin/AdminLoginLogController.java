@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/log/login")
+@Slf4j
 public class AdminLoginLogController {
 
     private final LoginLogMapper loginLogMapper;

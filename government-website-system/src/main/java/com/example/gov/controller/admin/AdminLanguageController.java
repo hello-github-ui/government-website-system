@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 后台文字配置控制器。
  */
 @Controller
 @RequestMapping("/admin/language")
+@Slf4j
 public class AdminLanguageController {
 
     private final LanguageMapper languageMapper;
@@ -32,7 +34,8 @@ public class AdminLanguageController {
     }
 
     @PostMapping("/save")
-    public String save(@RequestParam java.util.Map<String, String> configs, RedirectAttributes ra) {
+    public String save(@RequestParam java.util.Map<String, String> configs, RedirectAttributes ra) {
+        log.info("[{}] AdminLanguageController.save 调用", Thread.currentThread().getName());
         configs.forEach((k, v) -> {
             if (k.startsWith("cfg_")) {
                 String key = k.substring(4);
@@ -44,7 +47,8 @@ public class AdminLanguageController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+    public String delete(@RequestParam Long id, RedirectAttributes ra) {
+        log.info("[{}] AdminLanguageController.delete 调用, 参数: id={}", Thread.currentThread().getName(), id);
         languageMapper.deleteById(id);
         ra.addFlashAttribute("flashMessage", "删除成功");
         return "redirect:/admin/language";

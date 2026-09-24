@@ -4,6 +4,7 @@ import com.example.gov.entity.Setting;
 import com.example.gov.mapper.SettingMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * <p>所有设置以 key-value 形式存储在 gov_settings 表，并整体缓存到 Redis（key=settings_all），
  * 读取走缓存、写入时刷新缓存，对应 PHP 版 Settings::getAllSettings() 逻辑。</p>
  */
+@Slf4j
 @Service
 public class SettingService {
 
@@ -85,6 +87,8 @@ public class SettingService {
      * 保存单个设置项（存在则更新，不存在则插入）。
      */
     public void set(String key, String value) {
+        String thread = Thread.currentThread().getName();
+        log.info("[{}] 保存系统设置 key={}, value长度={}", thread, key, value == null ? 0 : value.length());
         Setting exist = settingMapper.findByKey(key);
         if (exist != null) {
             settingMapper.updateValue(key, value);
@@ -96,6 +100,7 @@ public class SettingService {
             settingMapper.insert(s);
         }
         clearCache();
+        log.info("[{}] 系统设置已保存 key={}", thread, key);
     }
 
     /**

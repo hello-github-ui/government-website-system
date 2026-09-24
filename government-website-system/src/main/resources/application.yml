@@ -92,7 +92,8 @@ mybatis:
     configuration:
         map-underscore-to-camel-case: true
         cache-enabled: true
-        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 打印SQL到控制台
+        # SQL 日志走 SLF4J/logback（统一格式，含线程名、时间戳，便于排查多线程问题）
+        log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 # ----------------- 业务自定义配置 -----------------
 gov:
@@ -115,4 +116,6 @@ gov:
 logging:
     level:
         com.example.gov: info
+        # Mapper 包 debug：打印 MyBatis 预编译 SQL 与参数（走 logback，含线程名）
+        com.example.gov.mapper: debug
         org.mybatis: warn

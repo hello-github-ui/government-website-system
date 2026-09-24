@@ -55,20 +55,26 @@ public class AdminService {
      * 校验管理员账号密码，成功返回管理员对象，失败抛出 BizException。
      */
     public Admin login(String username, String password, String ip, String userAgent) {
+        String thread = Thread.currentThread().getName();
+        log.info("[{}] 后台登录请求 username={}, ip={}", thread, username, ip);
         Admin admin = adminMapper.findByUsername(username);
         if (admin == null) {
+            log.warn("[{}] 后台登录失败(用户不存在) username={}, ip={}", thread, username, ip);
             recordLoginLog(0L, username, 0, "用户不存在", ip, userAgent);
             throw new BizException("用户名或密码错误");
         }
         if (admin.getStatus() != null && admin.getStatus() != 1) {
+            log.warn("[{}] 后台登录失败(账号禁用) username={}, ip={}", thread, username, ip);
             throw new BizException("账号已被禁用");
         }
         if (admin.getAuthStatus() != null && admin.getAuthStatus() != 1) {
+            log.warn("[{}] 后台登录失败(待授权) username={}, ip={}", thread, username, ip);
             throw new BizException("账号待授权，请联系超级管理员");
         }
         // 锁定判断
         if (admin.getLockTime() != null && admin.getLockTime().isAfter(LocalDateTime.now())) {
             long remain = java.time.Duration.between(LocalDateTime.now(), admin.getLockTime()).toMinutes() + 1;
+            log.warn("[{}] 后台登录失败(账号锁定) username={}, 剩余{}分钟, ip={}", thread, username, remain, ip);
             throw new BizException("账号已锁定，请" + remain + "分钟后重试");
         }
         // 密码校验
@@ -82,6 +88,8 @@ public class AdminService {
             adminMapper.updateFailCount(admin.getId(), fail, lockTime);
             recordLoginLog(admin.getId(), username, 0, "密码错误", ip, userAgent);
             int remainChance = maxFail - fail;
+            log.warn("[{}] 后台登录失败(密码错误) username={}, 第{}次, 剩余{}次, ip={}",
+                thread, username, fail, Math.max(remainChance, 0), ip);
             if (remainChance <= 0) {
                 throw new BizException("密码错误次数过多，账号已锁定30分钟");
             }
@@ -90,6 +98,7 @@ public class AdminService {
         // 成功
         adminMapper.updateLoginInfo(admin.getId(), ip);
         recordLoginLog(admin.getId(), username, 1, "", ip, userAgent);
+        log.info("[{}] 后台登录成功 adminId={}, username={}, ip={}", thread, admin.getId(), username, ip);
         return admin;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -23,6 +24,7 @@ import java.nio.file.Paths;
  */
 @Controller
 @RequestMapping("/admin/backup")
+@Slf4j
 public class AdminBackupController {
 
     private final BackupService backupService;
@@ -45,6 +47,7 @@ public class AdminBackupController {
      */
     @PostMapping("/create")
     public String create(RedirectAttributes ra) {
+        log.info("[{}] AdminBackupController.create 调用", Thread.currentThread().getName());
         try {
             String name = backupService.exportDatabase();
             ra.addFlashAttribute("flashMessage", "备份创建成功: " + name);
@@ -75,6 +78,7 @@ public class AdminBackupController {
      */
     @PostMapping("/delete")
     public String delete(@RequestParam String filename, RedirectAttributes ra) {
+        log.info("[{}] AdminBackupController.delete 调用, 参数: filename={}", Thread.currentThread().getName(), filename);
         if (backupService.delete(filename)) {
             ra.addFlashAttribute("flashMessage", "删除成功");
         } else {
