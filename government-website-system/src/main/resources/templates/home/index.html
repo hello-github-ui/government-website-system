@@ -4,30 +4,20 @@
 <body>
 <header th:replace="~{home/fragments/header :: top}"></header>
 
-<!-- 轮播 / Hero（政府网站风格：徽标 + 站点名 + 日期 + 站内搜索） -->
-<section class="hero-section" style="background:linear-gradient(135deg,#c8102e,#8f0f22);">
-    <div class="container py-5 text-center text-white">
-        <i class="fas fa-landmark fa-3x mb-2 opacity-75"></i>
-        <h1 class="display-5 fw-bold mb-1" th:text="${siteConfig['site_title']} ?: '政府官网系统'">政府官网系统</h1>
-        <p class="lead mb-3" th:text="${siteConfig['site_subtitle']} ?: '政务服务门户网站'">政务服务门户网站</p>
-        <div class="small text-white-50 mb-4">
-            今天是
-            <span th:text="${#temporals.format(#temporals.createNow(),'yyyy年MM月dd日 EEEE')}">日期</span>
-        </div>
-        <form th:action="@{/search}" method="get" class="mx-auto mb-4" style="max-width:560px;">
-            <div class="input-group input-group-lg rounded-pill overflow-hidden shadow-sm">
-                <input type="text" name="q" class="form-control border-0" autocomplete="off"
-                       placeholder="搜索公告 / 政策法规 / 裁判文书" aria-label="搜索">
-                <button class="btn btn-warning fw-semibold px-4" type="submit">
-                    <i class="fas fa-search"></i> 搜索
-                </button>
+<!-- 顶部全站搜索条（轻量，保持搜索功能在首屏顶部） -->
+<section class="py-3 bg-white border-bottom">
+    <div class="container">
+        <div class="row align-items-center g-2">
+            <div class="col-md-auto d-none d-md-block">
+                <span class="fw-semibold text-danger"><i class="fas fa-search me-1"></i>全站搜索</span>
             </div>
-        </form>
-        <div>
-            <a th:href="@{/service}" class="btn btn-light btn-lg rounded-pill px-4 me-2">
-                <i class="fas fa-tasks me-1"></i>开始办事</a>
-            <a th:href="@{/notice}" class="btn btn-outline-light btn-lg rounded-pill px-4">
-                <i class="fas fa-bullhorn me-1"></i>查看公告</a>
+            <div class="col">
+                <form th:action="@{/search}" method="get" class="d-flex">
+                    <input type="text" name="q" class="form-control me-2" autocomplete="off"
+                           placeholder="搜索公告 / 政策法规 / 裁判文书" aria-label="搜索">
+                    <button class="btn btn-danger px-4" type="submit">搜索</button>
+                </form>
+            </div>
         </div>
     </div>
 </section>
@@ -88,6 +78,27 @@
                     <div th:if="${#lists.isEmpty(policies)}" class="list-group-item text-center text-muted">暂无数据</div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- 底部横幅（政务风格：徽标 + 站点名 + 日期 + 办事入口） -->
+<section class="hero-section" style="background:linear-gradient(135deg,#c8102e,#8f0f22);">
+    <div class="container py-4 text-center text-white">
+        <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-3">
+            <i class="fas fa-landmark fa-2x opacity-75"></i>
+            <h1 class="h3 fw-bold mb-0" th:text="${siteConfig['site_title']} ?: '政府官网系统'">政府官网系统</h1>
+            <span class="small text-white-50" th:text="${siteConfig['site_subtitle']}">政务服务门户网站</span>
+            <span class="small text-white-50">
+                今天是
+                <span th:text="${#temporals.format(#temporals.createNow(),'yyyy年MM月dd日 EEEE')}">日期</span>
+            </span>
+        </div>
+        <div>
+            <a th:href="@{/service}" class="btn btn-light rounded-pill px-4 me-2">
+                <i class="fas fa-tasks me-1"></i>开始办事</a>
+            <a th:href="@{/notice}" class="btn btn-outline-light rounded-pill px-4">
+                <i class="fas fa-bullhorn me-1"></i>查看公告</a>
         </div>
     </div>
 </section>
