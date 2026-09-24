@@ -38,7 +38,7 @@ public class AdminUserController {
     @PostMapping("/add")
     public String add(@RequestParam String username,
                       @RequestParam String password,
-                      @RequestParam(required = false) String realName,
+                      @RequestParam(value = "real_name", required = false) String realName,
                       @RequestParam(required = false) String email,
                       @RequestParam(required = false) String phone,
                       @RequestParam(defaultValue = "1") Integer status,
@@ -65,7 +65,7 @@ public class AdminUserController {
 
     @PostMapping("/edit/{id}")
     public String edit(@PathVariable Long id,
-                       @RequestParam(required = false) String realName,
+                       @RequestParam(value = "real_name", required = false) String realName,
                        @RequestParam(required = false) String email,
                        @RequestParam(required = false) String phone,
                        @RequestParam(required = false) String password,

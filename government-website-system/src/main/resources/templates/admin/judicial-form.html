@@ -6,8 +6,10 @@
 <div class="admin-main">
     <div th:insert="~{admin/fragments/layout :: topbar(title='文书编辑')}"></div>
     <div class="admin-content">
+        <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
         <div class="card shadow-sm"><div class="card-body">
-            <form th:action="${info != null} ? @{/admin/judicial/edit/{id}(id=${info.id})} : @{/admin/judicial/add}" method="post">
+            <form th:action="${info != null} ? @{/admin/judicial/edit/{id}(id=${info.id})} : @{/admin/judicial/add}"
+                  method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">案号 *</label>
                         <input name="case_no" class="form-control" th:value="${info?.caseNo}" required></div>
@@ -25,15 +27,21 @@
                 </div>
                 <div class="mb-3"><label class="form-label">文书内容</label>
                     <textarea name="content" rows="8" class="form-control" th:text="${info?.content}"></textarea></div>
+                <div class="mb-3"><label class="form-label">附件</label>
+                    <div th:if="${info?.attachment != null}" class="small mb-1">
+                        当前附件：<a th:href="@{'/uploads/' + ${info.attachment}}" target="_blank" th:text="${info.attachment}"></a>
+                        <span class="text-muted">（重新上传将覆盖）</span>
+                    </div>
+                    <input type="file" name="attachment" class="form-control"></div>
                 <div class="row">
                     <div class="col-md-4 mb-3"><label class="form-label">审核状态</label>
-                        <select name="checkStatus" class="form-select">
+                        <select name="check_status" class="form-select">
                             <option value="0" th:selected="${info != null && info.checkStatus == 0}">待审核</option>
                             <option value="1" th:selected="${info == null || info.checkStatus == 1}">已通过</option>
                             <option value="2" th:selected="${info != null && info.checkStatus == 2}">已驳回</option>
                         </select></div>
                     <div class="col-md-4 mb-3"><label class="form-label">是否公开</label>
-                        <select name="isPublic" class="form-select">
+                        <select name="is_public" class="form-select">
                             <option value="1" th:selected="${info == null || info.isPublic == 1}">公开</option>
                             <option value="0" th:selected="${info != null && info.isPublic == 0}">不公开</option>
                         </select></div>

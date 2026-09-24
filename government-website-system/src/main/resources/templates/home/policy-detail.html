@@ -13,6 +13,11 @@
             </p>
             <hr>
             <div class="detail-content" th:utext="${policy.content}">内容</div>
+            <div th:if="${policy.attachment != null && !#strings.isEmpty(policy.attachment)}" class="mt-3 p-3 bg-light rounded">
+                <i class="fas fa-paperclip text-danger"></i> 附件下载：
+                <a th:href="@{'/uploads/' + ${policy.attachment}}" target="_blank" class="text-decoration-none"
+                   th:text="${policy.attachment}">附件</a>
+            </div>
         </div>
     </div>
     <a th:href="@{/policy}" class="btn btn-outline-secondary mt-3"><i class="fas fa-arrow-left"></i> 返回列表</a>

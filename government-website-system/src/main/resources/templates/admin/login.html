@@ -14,6 +14,7 @@
 <body>
 <div class="container">
     <div class="login-box">
+        <div th:if="${frontNotice != null}" class="alert alert-warning" th:text="${frontNotice}"></div>
         <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
         <div th:if="${flashMessage != null}" class="alert alert-success" th:text="${flashMessage}"></div>
         <div class="card shadow">

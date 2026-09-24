@@ -36,11 +36,20 @@ public class AdminLoginController {
 
     /**
      * 后台登录页。
+     *
+     * <p>若当前会话已登录后台则直接进入后台；若仅登录了前台账号，
+     * 在登录页给出提示，引导使用管理员账号登录，而不是报 403。</p>
      */
     @GetMapping("/login")
-    public String loginPage(HttpSession session) {
+    public String loginPage(HttpSession session, org.springframework.ui.Model model) {
         if (session.getAttribute(SessionKeys.ADMIN_ID) != null) {
             return "redirect:/admin";
+        }
+        // 前台已登录但未登录后台时给出提示
+        Object frontUserId = session.getAttribute(SessionKeys.USER_ID);
+        if (frontUserId != null) {
+            model.addAttribute("frontNotice",
+                "当前前台账号（" + session.getAttribute(SessionKeys.USER_NAME) + "）已登录，后台请使用管理员账号登录");
         }
         return "admin/login";
     }

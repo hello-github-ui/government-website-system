@@ -37,13 +37,13 @@ public class AdminNavController {
     }
 
     @PostMapping("/add")
-    public String add(@RequestParam String navName,
-                      @RequestParam(required = false) String navUrl,
+    public String add(@RequestParam(value = "nav_name") String navName,
+                      @RequestParam(value = "nav_url", required = false) String navUrl,
                       @RequestParam(defaultValue = "1") Integer navType,
-                      @RequestParam(defaultValue = "0") Long parentId,
+                      @RequestParam(value = "parent_id", defaultValue = "0") Long parentId,
                       @RequestParam(defaultValue = "_self") String target,
                       @RequestParam(defaultValue = "0") Integer sort,
-                      @RequestParam(defaultValue = "1") Integer isShow,
+                      @RequestParam(value = "is_show", defaultValue = "1") Integer isShow,
                       RedirectAttributes ra) {
         Nav n = new Nav();
         n.setNavName(navName);
@@ -67,13 +67,13 @@ public class AdminNavController {
 
     @PostMapping("/edit/{id}")
     public String edit(@PathVariable Long id,
-                       @RequestParam String navName,
-                       @RequestParam(required = false) String navUrl,
+                       @RequestParam(value = "nav_name") String navName,
+                       @RequestParam(value = "nav_url", required = false) String navUrl,
                        @RequestParam(defaultValue = "1") Integer navType,
-                       @RequestParam(defaultValue = "0") Long parentId,
+                       @RequestParam(value = "parent_id", defaultValue = "0") Long parentId,
                        @RequestParam(defaultValue = "_self") String target,
                        @RequestParam(defaultValue = "0") Integer sort,
-                       @RequestParam(defaultValue = "1") Integer isShow,
+                       @RequestParam(value = "is_show", defaultValue = "1") Integer isShow,
                        RedirectAttributes ra) {
         if (id.equals(parentId)) {
             ra.addFlashAttribute("flashError", "不能将导航设置为自己的子导航");

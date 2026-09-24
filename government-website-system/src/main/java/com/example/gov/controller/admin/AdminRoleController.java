@@ -43,8 +43,8 @@ public class AdminRoleController {
     }
 
     @PostMapping("/add")
-    public String add(@RequestParam String roleName,
-                      @RequestParam(required = false) String roleDesc,
+    public String add(@RequestParam(value = "role_name") String roleName,
+                      @RequestParam(value = "role_desc", required = false) String roleDesc,
                       @RequestParam(required = false) List<String> permissions,
                       @RequestParam(defaultValue = "1") Integer status,
                       RedirectAttributes ra) throws Exception {
@@ -78,8 +78,8 @@ public class AdminRoleController {
 
     @PostMapping("/edit/{id}")
     public String edit(@PathVariable Long id,
-                       @RequestParam String roleName,
-                       @RequestParam(required = false) String roleDesc,
+                       @RequestParam(value = "role_name") String roleName,
+                       @RequestParam(value = "role_desc", required = false) String roleDesc,
                        @RequestParam(required = false) List<String> permissions,
                        @RequestParam(defaultValue = "1") Integer status,
                        RedirectAttributes ra) throws Exception {

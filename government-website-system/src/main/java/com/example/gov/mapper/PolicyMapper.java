@@ -29,13 +29,13 @@ public interface PolicyMapper {
     @Select("SELECT COUNT(*) FROM gov_policy WHERE status=1")
     long countPublished();
 
-    @Insert("INSERT INTO gov_policy(title,publish_org,content,category_id,status,publish_date,create_time,update_time) " +
-        "VALUES(#{title},#{publishOrg},#{content},#{categoryId},#{status},#{publishDate},NOW(),NOW())")
+    @Insert("INSERT INTO gov_policy(title,publish_org,content,category_id,status,publish_date,attachment,create_time,update_time) " +
+        "VALUES(#{title},#{publishOrg},#{content},#{categoryId},#{status},#{publishDate},#{attachment},NOW(),NOW())")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(Policy policy);
 
     @Update("<script>UPDATE gov_policy SET title=#{title},publish_org=#{publishOrg},content=#{content}," +
-        "category_id=#{categoryId},status=#{status},publish_date=#{publishDate},update_time=NOW() WHERE id=#{id}</script>")
+        "category_id=#{categoryId},status=#{status},publish_date=#{publishDate},attachment=#{attachment},update_time=NOW() WHERE id=#{id}</script>")
     int update(Policy policy);
 
     @Delete("DELETE FROM gov_policy WHERE id=#{id}")

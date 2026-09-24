@@ -6,8 +6,10 @@
 <div class="admin-main">
     <div th:insert="~{admin/fragments/layout :: topbar(title='政策编辑')}"></div>
     <div class="admin-content">
+        <div th:if="${flashError != null}" class="alert alert-danger" th:text="${flashError}"></div>
         <div class="card shadow-sm"><div class="card-body">
-            <form th:action="${info != null} ? @{/admin/policy/edit/{id}(id=${info.id})} : @{/admin/policy/add}" method="post">
+            <form th:action="${info != null} ? @{/admin/policy/edit/{id}(id=${info.id})} : @{/admin/policy/add}"
+                  method="post" enctype="multipart/form-data">
                 <div class="mb-3"><label class="form-label">标题 *</label>
                     <input name="title" class="form-control" th:value="${info?.title}" required></div>
                 <div class="row">
@@ -19,6 +21,12 @@
                 </div>
                 <div class="mb-3"><label class="form-label">内容</label>
                     <textarea name="content" rows="8" class="form-control" th:text="${info?.content}"></textarea></div>
+                <div class="mb-3"><label class="form-label">附件</label>
+                    <div th:if="${info?.attachment != null}" class="small mb-1">
+                        当前附件：<a th:href="@{'/uploads/' + ${info.attachment}}" target="_blank" th:text="${info.attachment}"></a>
+                        <span class="text-muted">（重新上传将覆盖）</span>
+                    </div>
+                    <input type="file" name="attachment" class="form-control"></div>
                 <div class="mb-3"><label class="form-label">状态</label>
                     <select name="status" class="form-select">
                         <option value="1" th:selected="${info == null || info.status == 1}">已发布</option>

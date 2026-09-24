@@ -32,13 +32,13 @@ public interface JudicialMapper {
     @Update("UPDATE gov_judicial SET views=views+1 WHERE id=#{id}")
     int increaseViews(@Param("id") Long id);
 
-    @Insert("INSERT INTO gov_judicial(case_no,case_name,court,case_type,content,judge_date,check_status,is_public,status,create_time,update_time) " +
-        "VALUES(#{caseNo},#{caseName},#{court},#{caseType},#{content},#{judgeDate},#{checkStatus},#{isPublic},#{status},NOW(),NOW())")
+    @Insert("INSERT INTO gov_judicial(case_no,case_name,court,case_type,content,judge_date,check_status,is_public,status,attachment,create_time,update_time) " +
+        "VALUES(#{caseNo},#{caseName},#{court},#{caseType},#{content},#{judgeDate},#{checkStatus},#{isPublic},#{status},#{attachment},NOW(),NOW())")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(Judicial judicial);
 
     @Update("<script>UPDATE gov_judicial SET case_no=#{caseNo},case_name=#{caseName},court=#{court},case_type=#{caseType}," +
-        "content=#{content},judge_date=#{judgeDate},check_status=#{checkStatus},is_public=#{isPublic},status=#{status},update_time=NOW() WHERE id=#{id}</script>")
+        "content=#{content},judge_date=#{judgeDate},check_status=#{checkStatus},is_public=#{isPublic},status=#{status},attachment=#{attachment},update_time=NOW() WHERE id=#{id}</script>")
     int update(Judicial judicial);
 
     @Delete("DELETE FROM gov_judicial WHERE id=#{id}")

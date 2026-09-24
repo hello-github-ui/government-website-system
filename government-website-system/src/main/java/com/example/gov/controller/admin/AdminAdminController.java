@@ -44,7 +44,7 @@ public class AdminAdminController {
                       @RequestParam String password,
                       @RequestParam String name,
                       @RequestParam(required = false) String email,
-                      @RequestParam(defaultValue = "1") Long roleId,
+                      @RequestParam(value = "role_id", defaultValue = "1") Long roleId,
                       @RequestParam(defaultValue = "0") Integer isSuper,
                       @RequestParam(defaultValue = "1") Integer status,
                       RedirectAttributes ra) {
@@ -78,7 +78,7 @@ public class AdminAdminController {
                        @RequestParam(required = false) String email,
                        @RequestParam(required = false) String phone,
                        @RequestParam(required = false) String password,
-                       @RequestParam(defaultValue = "1") Long roleId,
+                       @RequestParam(value = "role_id", defaultValue = "1") Long roleId,
                        @RequestParam(defaultValue = "0") Integer isSuper,
                        @RequestParam(defaultValue = "1") Integer status,
                        RedirectAttributes ra) {

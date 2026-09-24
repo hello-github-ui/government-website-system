@@ -35,13 +35,29 @@ public class AdminSettingsController {
         // 仅保存已知设置键，避免写入任意字段
         String[] keys = {"site_title", "site_subtitle", "site_url", "site_logo", "site_favicon",
             "seo_keywords", "seo_description", "icp_number", "police_number", "copyright",
-            "contact_address", "contact_phone", "contact_email", "contact_work_time"};
+            "contact_address", "contact_phone", "contact_email", "contact_work_time",
+            "smtp_host", "smtp_port", "smtp_user", "smtp_pass", "smtp_from", "smtp_secure"};
         for (String k : keys) {
             if (form.containsKey(k)) {
                 settingService.set(k, form.get(k));
             }
         }
         ra.addFlashAttribute("flashMessage", "保存成功");
+        return "redirect:/admin/settings";
+    }
+
+    /**
+     * 测试 SMTP 邮件发送（读取已保存的配置，向目标邮箱发送一封测试邮件）。
+     */
+    @PostMapping("/sendTestMail")
+    public String sendTestMail(@RequestParam(required = false) String testEmail,
+                               RedirectAttributes ra) {
+        try {
+            MailTestService.sendTest(settingService, testEmail);
+            ra.addFlashAttribute("flashMessage", "测试邮件已发送，请查收 " + testEmail);
+        } catch (Exception e) {
+            ra.addFlashAttribute("flashError", "发送失败: " + e.getMessage());
+        }
         return "redirect:/admin/settings";
     }
 

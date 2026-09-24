@@ -56,7 +56,7 @@ public class HomeConsultController {
     public String save(@RequestParam String title,
                        @RequestParam String content,
                        @RequestParam(defaultValue = "1") Integer type,
-                       @RequestParam(defaultValue = "1") Integer isPublic,
+                       @RequestParam(value = "is_public", defaultValue = "1") Integer isPublic,
                        HttpSession session,
                        RedirectAttributes ra) {
         Long userId = (Long) session.getAttribute(SessionKeys.USER_ID);

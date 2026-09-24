@@ -6,29 +6,76 @@
 <div class="admin-main">
     <div th:insert="~{admin/fragments/layout :: topbar(title='媒体库')}"></div>
     <div class="admin-content">
-        <div class="card shadow-sm mb-3"><div class="card-body">
-            <form th:action="@{/admin/media/upload}" method="post" enctype="multipart/form-data" class="d-flex">
-                <input type="file" name="file" class="form-control me-2" required>
-                <button class="btn btn-danger">上传</button>
-            </form>
-        </div></div>
-        <div class="card shadow-sm"><div class="card-body">
-            <div class="row g-3">
-                <div class="col-md-3 text-center" th:each="f : ${list}">
-                    <div class="border rounded p-2">
-                        <i class="fas fa-file fa-2x text-secondary"></i>
-                        <div class="small text-truncate" th:text="${f.name}"></div>
-                        <div class="text-muted small" th:text="${f.size / 1024} + ' KB'"></div>
-                        <form th:action="@{/admin/media/delete}" method="post" onsubmit="return confirm('删除？')">
-                            <input type="hidden" name="filename" th:value="${f.name}">
-                            <button class="btn btn-sm btn-outline-danger mt-1">删除</button>
-                        </form>
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap">
+                <div class="btn-group btn-group-sm">
+                    <a th:href="@{/admin/media}" class="btn btn-outline-secondary" th:classappend="${type==''} ? 'active'">全部</a>
+                    <a th:href="@{/admin/media(type='image')}" class="btn btn-outline-secondary" th:classappend="${type=='image'} ? 'active'">图片</a>
+                    <a th:href="@{/admin/media(type='video')}" class="btn btn-outline-secondary" th:classappend="${type=='video'} ? 'active'">视频</a>
+                    <a th:href="@{/admin/media(type='audio')}" class="btn btn-outline-secondary" th:classappend="${type=='audio'} ? 'active'">音频</a>
+                    <a th:href="@{/admin/media(type='document')}" class="btn btn-outline-secondary" th:classappend="${type=='document'} ? 'active'">文档</a>
+                </div>
+                <form th:action="@{/admin/media/upload}" method="post" enctype="multipart/form-data" class="d-flex">
+                    <input type="file" name="file" class="form-control form-control-sm me-2" required>
+                    <button class="btn btn-danger btn-sm"><i class="fas fa-upload"></i> 上传文件</button>
+                </form>
+            </div>
+            <div class="card-body">
+                <div class="text-muted small mb-2">共 <b th:text="${total}"></b> 个文件</div>
+                <div class="row g-3">
+                    <div class="col-md-3 col-sm-4 col-6" th:each="f : ${list}">
+                        <div class="card h-100 shadow-sm">
+                            <div style="height:150px;overflow:hidden;">
+                                <img th:if="${f.type=='image'}" th:src="${f.url}" loading="lazy" class="card-img-top h-100 w-100"
+                                     style="object-fit:cover;cursor:pointer;filter:blur(6px);transition:filter .5s ease;"
+                                     onload="this.style.filter='none'"
+                                     th:title="${f.name}"
+                                     onclick="window.open(this.src)" alt=""/>
+                                <div th:unless="${f.type=='image'}" class="h-100 w-100 bg-light d-flex align-items-center justify-content-center">
+                                    <i th:if="${f.type=='video'}" class="fas fa-video fa-3x text-primary"></i>
+                                    <i th:if="${f.type=='audio'}" class="fas fa-music fa-3x text-success"></i>
+                                    <i th:if="${f.type=='document'}" class="fas fa-file-alt fa-3x text-danger"></i>
+                                    <i th:if="${f.type=='other'}" class="fas fa-file fa-3x text-muted"></i>
+                                </div>
+                            </div>
+                            <div class="card-body p-2">
+                                <p class="card-text small text-truncate mb-1" th:title="${f.name}" th:text="${f.name}"></p>
+                                <p class="card-text small text-muted mb-0" th:text="${f.sizeText} + ' | ' + ${f.time}"></p>
+                            </div>
+                            <div class="card-footer p-2 d-flex gap-1">
+                                <button type="button" class="btn btn-info btn-xs flex-fill"
+                                        th:attr="data-url=${f.url}" onclick="copyUrl(this.getAttribute('data-url'))"><i class="fas fa-link"></i> 复制链接</button>
+                                <form th:action="@{/admin/media/delete}" method="post" onsubmit="return confirm('确定删除？')" class="flex-fill">
+                                    <input type="hidden" name="filename" th:value="${f.name}">
+                                    <button class="btn btn-danger btn-xs w-100"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${#lists.isEmpty(list)}" class="col-12 text-center text-muted py-5">
+                        <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                        <p>暂无媒体文件</p>
                     </div>
                 </div>
-                <div th:if="${#lists.isEmpty(list)}" class="text-center text-muted py-4">暂无文件</div>
             </div>
-        </div></div>
+            <div class="card-footer" th:if="${totalPage > 1}">
+                <nav><ul class="pagination pagination-sm mb-0">
+                    <li class="page-item" th:if="${page > 1}">
+                        <a class="page-link" th:href="@{/admin/media(type=${type}, page=${page-1})}">上一页</a></li>
+                    <li class="page-item disabled"><a class="page-link" th:text="'第 ' + ${page} + ' / ' + ${totalPage} + ' 页'"></a></li>
+                    <li class="page-item" th:if="${page < totalPage}">
+                        <a class="page-link" th:href="@{/admin/media(type=${type}, page=${page+1})}">下一页</a></li>
+                </ul></nav>
+            </div>
+        </div>
     </div>
 </div>
+<script>
+function copyUrl(url) {
+    navigator.clipboard.writeText(url).then(function () {
+        alert('链接已复制到剪贴板: ' + url);
+    });
+}
+</script>
 </body>
 </html>

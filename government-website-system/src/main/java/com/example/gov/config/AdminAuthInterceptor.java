@@ -11,7 +11,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * 后台登录拦截器。
  *
  * <p>对 /admin/** 除登录相关白名单外的请求校验后台登录态；
- * 未登录重定向到 /admin/login；普通前台用户访问后台则返回 403。</p>
+ * 未登录（无论是否已登录前台）一律重定向到 /admin/login，
+ * 由登录页提示“请使用管理员账号登录”，避免出现 403 错误页。</p>
  */
 @Component
 public class AdminAuthInterceptor implements HandlerInterceptor {
@@ -31,12 +32,8 @@ public class AdminAuthInterceptor implements HandlerInterceptor {
         Object adminId = session.getAttribute(SessionKeys.ADMIN_ID);
         Object admin = session.getAttribute(SessionKeys.ADMIN);
         if (adminId == null || admin == null) {
-            // 普通前台用户访问后台 -> 403，未登录 -> 跳转登录
-            if (session.getAttribute(SessionKeys.USER_ID) != null) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "您没有后台访问权限");
-            } else {
-                response.sendRedirect("/admin/login");
-            }
+            // 前台用户访问后台同样跳转登录页（保留前台会话），登录页会给出提示
+            response.sendRedirect("/admin/login");
             return false;
         }
         return true;

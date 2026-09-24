@@ -79,7 +79,9 @@ gov:
     # 上传文件存储目录（相对运行目录）
     upload-path: ./uploads/
     # 上传允许扩展名
-    upload-allowed-ext: jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,mp4
+    upload-allowed-ext: jpg,jpeg,png,gif,webp,bmp,mp4,avi,mov,wmv,flv,mp3,wav,ogg,wma,pdf,doc,docx,xls,xlsx,ppt,pptx,txt
+    # 数据备份文件存储目录（相对运行目录）
+    backup-path: ./backup/
     # 登录安全
     security:
         login-max-fail: 5

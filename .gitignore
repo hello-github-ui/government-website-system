@@ -1,4 +1,4 @@
-**/target/
+﻿**/target/
 **/.mvn/
 **/.idea/
 **/*.log
@@ -15,4 +15,5 @@
 **/package-lock.json
 
 # 上传文件（运行时生成）
-#uploads/
+uploads/
+**/backup/
